@@ -13,7 +13,7 @@ const ProductCard = ({ product, onDelete }) => {
   };
 
   return (
-    <div className="card product-card m-3" style={{width: '20rem'}}>
+    <div className="card product-card m-2" style={{width: '19.5rem'}}>
       <img src={product.image} className="card-img-top product-image" alt={product.name} />
       <div className="card-body">
         <h5 className="card-title product-name">{product.name}</h5>
@@ -21,8 +21,8 @@ const ProductCard = ({ product, onDelete }) => {
         <p className="card-text product-quantity">Cantidad: {quantity}</p>
         <div className="d-flex justify-content-between product-actions">
           <button className="btn btn-primary btn-increase" onClick={increaseQuantity}>Aumentar</button>
-          <button className="btn btn-secondary btn-decrease" onClick={decreaseQuantity}>Disminuir</button>
-        <button className="btn btn-danger " onClick={() => onDelete(product.id)}>Eliminar</button>
+          <button className="btn btn-secondary btn-decrease mx-1" onClick={decreaseQuantity}>Disminuir</button>
+          <button className="btn btn-danger " onClick={() => onDelete(product.id)}>Eliminar</button>
         </div>
       </div>
     </div>
