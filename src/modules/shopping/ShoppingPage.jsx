@@ -14,7 +14,7 @@ const ShoppingPage = () => {
     <div className="container-fluid shopping">
         {/* <h1>Shopping Page</h1> */}
         <div className="row cotenedor">
-          <div className="col-7">
+          <div className="col-9">
             <h2 className='ml-2 mt-4'>Tu Carrito</h2>
             <div className="d-flex flex-wrap">
               {products.map(product => (
@@ -26,7 +26,7 @@ const ShoppingPage = () => {
               ))}
             </div>
           </div>
-          <div className="col">
+          <div className="col-2 m-0">
             <div className="mt-5 pt-4 mr-0">
               <h2 className='mt-1'>Resumen de la Orden</h2>
               <BuyerForm className='mt-4 mr-2'/>

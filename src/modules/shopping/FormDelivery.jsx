@@ -19,7 +19,7 @@ const BuyerForm = () => {
     };
 
     return (
-        <div className='col-3'>
+        <div className='col'>
             <h5>Información del Comprador</h5>
             <button className="btn btn-primary mb-3" onClick={toggleEdit}>
                 {isEditing ? 'Guardar' : 'Editar'}
