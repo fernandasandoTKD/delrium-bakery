@@ -3,7 +3,7 @@
 
 .posts_container {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 10rem;
     width: 80%;
   }
@@ -26,6 +26,10 @@
     border-radius: var(--radius-3);
     overflow: hidden;
     height: 16rem;
+  }
+
+  .post__image {
+    width: 100%;
   }
   
   .post__content {
@@ -55,3 +59,4 @@
     border-radius: var(--radius-2);
     overflow: hidden;
   }
+

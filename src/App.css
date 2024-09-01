@@ -9,3 +9,30 @@ body {
   color: black;
   font-family: Arial, sans-serif;
 }
+
+:root {
+  --color-primary: hsl(281, 67%, 48%);
+--color-white: #FFFFFF;
+--color-red: #E62645;
+--color-red-two:#E52644;
+--color-gray-100: hsl(220,20%,10%,5%);
+--color-gray-200: hsl(220,20%,10%,10%);
+--color-gray-300: hsl(220,20%,10%,25%);
+--color-gray-500:hsl(220,20%,10%,50%);
+--color-gray-700: #252542;
+--color-gray-900: #0c0c22;
+--color-tercer: #16ACBB ;
+--color-bg: #e8ecec;
+
+--transition: all 300ms ease;
+
+--container-widht-lg: 84%;
+--container-width-md: 92%;
+--form-width: 50%;
+
+--radius-1: 0.3rem;
+--radius-2: 0.9rem;
+--radius-3: 1rem;
+--radius-4: 2rem;
+
+}
