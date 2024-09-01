@@ -9,7 +9,7 @@ import { ProductsPage } from "../modules/products/ProductsPage";
 import { QuotesPages } from "../modules/quotes/QuotesPages";
 import { ClassesPages } from "../modules/classes/ClassesPages";
 import { ErrorPage } from "../modules/error/ErrorPage";
-
+import {BlogPage} from "../modules/blog/BlogPage";
 export const AppRouter = () => {
 
   /* const {user, setUser} =useContext(Context); */
@@ -48,6 +48,8 @@ export const AppRouter = () => {
           <Route path='/products' element={<div className="content"><ProductsPage /></div>}></Route>
           <Route path='/classes' element={<div className="content">< ClassesPages/></div>}></Route>
           <Route path='/quotes' element={<div className="content">< QuotesPages/></div>}></Route>
+          <Route path='/blog' element={<div className="content">< BlogPage/></div>}></Route>
+
           <Route path='*' element={<ErrorPage />}></Route>
         </Routes>
     </Router>
