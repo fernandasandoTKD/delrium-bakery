@@ -1,9 +1,9 @@
 import React from 'react'
 import {Link} from "react-router-dom"
-import Logo from '../images/logo.png'
-import {FaBars} from "react-icons/fa"
+import Logo from '../../images/logo.png'
+import { FaBars } from "react-icons/fa6"
 import {AiOutlineClose} from "react-icons/ai"
-
+import "./header.css"
 
 
 const Header = () => {

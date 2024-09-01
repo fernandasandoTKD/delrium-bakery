@@ -10,6 +10,7 @@ import { QuotesPages } from "../modules/quotes/QuotesPages";
 import { ClassesPages } from "../modules/classes/ClassesPages";
 import { ErrorPage } from "../modules/error/ErrorPage";
 import {BlogPage} from "../modules/blog/BlogPage";
+
 export const AppRouter = () => {
 
   /* const {user, setUser} =useContext(Context); */
@@ -36,6 +37,7 @@ export const AppRouter = () => {
                 <Nav.Link href='/quotes' className="text-light fs-5">Cotizaciones</Nav.Link>
                 <Nav.Link href='/classes' className="text-light fs-5">Clases</Nav.Link>
                 <Nav.Link href="/about" className="text-light fs-5">Sobre nosotros</Nav.Link>
+                <Nav.Link href="/blog" className="text-light fs-5">Blog</Nav.Link>
               </Nav>
             </Navbar.Collapse>
         </Container>
