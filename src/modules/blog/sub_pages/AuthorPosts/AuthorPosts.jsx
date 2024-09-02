@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { DUMMY_POSTS } from '../../data'
 import PostItem from '../../components/PostItem/PostItem'
 
-const AuthorPosts = () => {
+export const AuthorPosts = () => {
   const [posts, setPosts] = useState(DUMMY_POSTS)
 
   return (

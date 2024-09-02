@@ -1,4 +1,3 @@
-import React, { useState } from 'react'
 import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css'
 
@@ -8,7 +7,7 @@ export const CreatePost = () => {
   const [description, setDescription] = useState ('')
   const [thumbnail, setThumbnail] =useState ('')
 
-export  const modules ={
+const modules ={
     toolbar: [
       [{'header': [1, 2, 3, 4, 5, 6, false] }],
       ['bold', 'italic', 'underline', 'strike', 'blockquote'],
@@ -18,14 +17,14 @@ export  const modules ={
     ],
   }
 
-export const formats =[
+const formats =[
     'header',
     'bold', 'italic', 'underline', 'strike', 'blockquote',
     'list', 'bullet', 'indent',
     'link', 'image'
   ]
 
-export const POST_CATEGORIES = ["Nuestra Historia", "Panes del mundo", "Tortas Artesanales", "Arte en galletas"]
+const POST_CATEGORIES = ["Nuestra Historia", "Panes del mundo", "Tortas Artesanales", "Arte en galletas"]
 
   return (
     <section className="create-post">

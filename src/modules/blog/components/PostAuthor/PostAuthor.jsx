@@ -8,7 +8,7 @@ const PostAuthor = () => {
   return (
     <Link to ={'/post/user/sfasd'} className='post_author'>
         <div className="post_author-avatar">
-            <img src= {Avatar} alt="" />
+            <img className="image_avatar"src= {Avatar} alt="" />
         </div>
         <div className="post_author-details">
             <h5>By: Alberto Angel </h5>

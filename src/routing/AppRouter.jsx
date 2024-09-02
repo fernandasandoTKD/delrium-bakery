@@ -12,12 +12,12 @@ import { ErrorPage } from "../modules/error/ErrorPage";
 import {BlogPage} from "../modules/blog/BlogPage";
 import {PostDetail} from "../modules/blog/sub_pages/PostDetail/PostDetail"
 import {Authors} from "../modules/blog/sub_pages/Authors/Authors"
-import {Create} from  "../modules/blog/sub_pages/CreatePost/CreatePost"
+import {CreatePost} from  "../modules/blog/sub_pages/CreatePost/CreatePost"
 import {CategoryPosts} from "../modules/blog/sub_pages/CategoryPosts/CategoryPosts"
 import {AuthorPosts} from "../modules/blog/sub_pages/AuthorPosts/AuthorPosts"
 import {Dashboard} from "../modules/blog/sub_pages/Dashboard/Dashboard"
 import {EditPost} from "../modules/blog/sub_pages/EditPost/EditPost"
-import {DeletePost} from "../modules/blog/sub_pages/DeletePost/DeletePost"
+import {DeletePost} from "../modules/blog/sub_pages/DeletePost/DeletePost.jsx"
 
 export const AppRouter = () => {
 
@@ -63,8 +63,8 @@ export const AppRouter = () => {
           <Route path='/authors' element={<div className="content">< Authors/></div>}></Route>
           <Route path='/create' element={<div className="content">< CreatePost/></div>}></Route>
           <Route path='/post/categories/:category' element={<div className="content">< CategoryPosts/></div>}></Route>
-          <Route path='/posts/user/:id' element={<div className="content">< AuthorPosts/></div>}></Route>
-          <Route path='/myposts/:id' element={<div className="content">< Dashboard/></div>}></Route>
+          <Route path='/posts/user/:id' element={<div className="content"><AuthorPosts/></div>}></Route>
+          <Route path='/myposts/:id' element={<div className="content"><Dashboard/></div>}></Route>
           <Route path='/posts/:id/edit' element={<div className="content">< EditPost/></div>}></Route>
           <Route path='/posts/:id/delete' element={<div className="content">< DeletePost/></div>}></Route>
 
