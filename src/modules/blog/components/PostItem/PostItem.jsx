@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import PostAuthor from '../PostAuthor/PostAuthor'
+import "./postitem.css"
 
 const PostItem = ({postID, category, title, description, authorID, thumbnail}) => {
     const shortDescription = description.length > 145 ? description.substr (0, 145) + '...' : description;

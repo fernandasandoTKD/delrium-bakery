@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import PostItem from '../PostItem'
+import PostItem from '../PostItem/PostItem'
 import { DUMMY_POSTS } from '../../data'
 import "./posts.css"
 
