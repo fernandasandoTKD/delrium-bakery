@@ -20,8 +20,8 @@ export const DUMMY_POSTS = [
       id:'2',
       thumbnail: Thumbnail2,
       category: 'Panes del mundo',
-      title: 'Pan Focaccia',
-      desc: 'Mucho antes de la pizza surgió un alimento basado, tan solo, en 5 ingredientes principales, harina, agua, levadura, aceite de oliva y sal, y que hoy en día sigue siendo todo un símbolo de la cocina italiana en cualquier parte del mundo y, también, un claro reflejo de la gastronomía mediterránea por la utilización del trigo, el agua, las especias y, por supuesto, el aceite de oliva, también llamado oro líquido, para su elaboración.',
+      title: 'Pan de aceitunas y queso paipa',
+      desc: '¡Pan artesanal, queso paipa fundido, tomate cherry con albahaca y aceite de oliva, pimienta, paprika, orégano y para rematar unas rodajas de.....',
       authorID:2
     },
   

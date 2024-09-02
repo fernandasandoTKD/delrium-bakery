@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { DUMMY_POSTS } from '../../data'
-import PostItem from '../../components/PostItem/PostItem'
+import { DUMMY_POSTS } from '../data'
+import PostItem from '../components/PostItem'
 
 export const CategoryPosts = () => {
   const [posts, setPosts] = useState(DUMMY_POSTS)

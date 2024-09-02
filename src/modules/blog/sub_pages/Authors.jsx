@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
-import Avatar1 from '../../images/avatar1.jpg'
-import Avatar2 from '../../images/avatar2.png'
-import Avatar3 from '../../images/avatar3.png'
-import Avatar4 from '../../images/avatar4.png'
+import Avatar1 from '../images/avatar1.png'
+import Avatar2 from '../images/avatar2.png'
+import Avatar3 from '../images/avatar3.png'
+import Avatar4 from '../images/avatar4.png'
 import { Link } from 'react-router-dom'
-import './authors.css'
+import '../css/stylesblog.css'
 
 
 const authorsData = [

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import PostItem from '../PostItem/PostItem'
-import { DUMMY_POSTS } from '../../data'
-import "./posts.css"
+import PostItem from '../components/PostItem'
+import { DUMMY_POSTS } from '../data'
+import "../css/stylesblog.css"
 
 const Posts = () => {
   const [posts, setPosts] = useState(DUMMY_POSTS)

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import Avatar from '../../images/avatar1.jpg'
-
+import Avatar from '../images/avatar1.png'
+import "../css/stylesblog.css"
 
 
 const PostAuthor = () => {

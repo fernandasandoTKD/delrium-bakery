@@ -10,14 +10,14 @@ import { QuotesPages } from "../modules/quotes/QuotesPages";
 import { ClassesPages } from "../modules/classes/ClassesPages";
 import { ErrorPage } from "../modules/error/ErrorPage";
 import {BlogPage} from "../modules/blog/BlogPage";
-import {PostDetail} from "../modules/blog/sub_pages/PostDetail/PostDetail"
-import {Authors} from "../modules/blog/sub_pages/Authors/Authors"
-import {CreatePost} from  "../modules/blog/sub_pages/CreatePost/CreatePost"
-import {CategoryPosts} from "../modules/blog/sub_pages/CategoryPosts/CategoryPosts"
-import {AuthorPosts} from "../modules/blog/sub_pages/AuthorPosts/AuthorPosts"
-import {Dashboard} from "../modules/blog/sub_pages/Dashboard/Dashboard"
-import {EditPost} from "../modules/blog/sub_pages/EditPost/EditPost"
-import {DeletePost} from "../modules/blog/sub_pages/DeletePost/DeletePost.jsx"
+import {PostDetail} from "../modules/blog/sub_pages/PostDetail.jsx"
+import {Authors} from "../modules/blog/sub_pages/Authors.jsx"
+import {CreatePost} from  "../modules/blog/sub_pages/CreatePost.jsx"
+import {CategoryPosts} from "../modules/blog/sub_pages/CategoryPosts.jsx"
+import {AuthorPosts} from "../modules/blog/sub_pages/AuthorPosts.jsx"
+import {Dashboard} from "../modules/blog/sub_pages/Dashboard.jsx"
+import {EditPost} from "../modules/blog/sub_pages/EditPost.jsx"
+import {DeletePost} from "../modules/blog/sub_pages/DeletePost.jsx"
 
 export const AppRouter = () => {
 

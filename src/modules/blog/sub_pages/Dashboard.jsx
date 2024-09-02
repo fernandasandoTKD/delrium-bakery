@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {DUMMY_POSTS} from '../../data'
+import {DUMMY_POSTS} from '../data'
 import { Link } from 'react-router-dom'
 
 
