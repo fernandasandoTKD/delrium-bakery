@@ -16,6 +16,7 @@ import {CreatePost} from  "../modules/blog/sub_pages/CreatePost.jsx"
 import {CategoryPosts} from "../modules/blog/sub_pages/CategoryPosts.jsx"
 import {AuthorPosts} from "../modules/blog/sub_pages/AuthorPosts.jsx"
 import {Dashboard} from "../modules/blog/sub_pages/Dashboard.jsx"
+import {UserProfile} from "../modules/blog/sub_pages/UserProfile.jsx"
 import {EditPost} from "../modules/blog/sub_pages/EditPost.jsx"
 import {DeletePost} from "../modules/blog/sub_pages/DeletePost.jsx"
 
@@ -65,6 +66,7 @@ export const AppRouter = () => {
           <Route path='/post/categories/:category' element={<div className="content">< CategoryPosts/></div>}></Route>
           <Route path='/posts/user/:id' element={<div className="content"><AuthorPosts/></div>}></Route>
           <Route path='/myposts/:id' element={<div className="content"><Dashboard/></div>}></Route>
+          <Route path='/profile/:id' element={<div className="content"><UserProfile d/></div>}></Route>
           <Route path='/posts/:id/edit' element={<div className="content">< EditPost/></div>}></Route>
           <Route path='/posts/:id/delete' element={<div className="content">< DeletePost/></div>}></Route>
 

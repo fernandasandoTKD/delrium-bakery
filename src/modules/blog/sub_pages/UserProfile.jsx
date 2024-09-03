@@ -1,35 +1,53 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import React, {useState} from 'react'
+import { Link } from "react-router-dom";
+import Avatar from '../images/avatar5.png';
+import { FaEdit } from "react-icons/fa";
+import { FaCheck } from "react-icons/fa";
 
-const Register = () => {
-  const [userData, setUserData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    password2: '',
-  })
 
-  const changeInputHandler = (e) => {
-    setUserData(prevState => {
-      return {...prevState, [e.target.name]: e.target.value}
-    })
-  }
+export const UserProfile = () =>  {
+  const [avatar, setAvatar] = useState(Avatar)
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState ('')
+  const [currentPassword, setCurrentPassword] = useState('')
+  const [newPassword, setNewPassword] = useState('')
+  const [confirmNewPassword, setConfirmNewPassword] = useState('')
+
   return (
-    <section className="register">
-      <div className="container">
-        <h2>Sign Up</h2>
-        <form className="form register_form">
-          <p className="form_error-message"> Mensaje de error </p>
-          <input type="text" placeholder='Full Name' name='name' value={userData.name} onChange={changeInputHandler} />
-          <input type="text" placeholder='Email' name='email' value={userData.email} onChange={changeInputHandler} />
-          <input type="password" placeholder='Password' name='password' value={userData.password} onChange={changeInputHandler} />
-          <input type="password" placeholder='Confirm password' name='password2' value={userData.password2} onChange={changeInputHandler} />
-          <button type= "submit" className='btn primary'> Register </button>
-        </form>
-        <small>Already have an account? <Link to="/login">sign in</Link></small>
-      </div>
-    </section>
-  )
-}
+    <section className="profile">
+      <div className="container profile_container">
+        <Link to={`/myposts/sdfsfs`} className="btn">My posts</Link>
 
-export default Register
+        <div className="profile_details">
+          <div className="avatar_wrapper">
+            <div className="profile_avatar">
+              <img src={avatar} alt="" />
+            </div>
+            {/* form to update avatar*/}
+            <form className="avatar_form">
+              <input type="file" name="avatar" id="avatar" onChange={e => setAvatar(e.target.files[0])} accept="png, jpg, jpeg" />
+              <label htmlFor="avatar"><FaEdit /></label>
+            </form>
+            <button className="profile_avatar-btn"><FaCheck /></button>
+            </div>
+
+            <h1>Ana Abelino</h1>
+            {/*Form to update user details*/} 
+            <form className="form profile_form">
+              <p className="form_error-message">Error</p>
+              <input type="text"placeholder='Full name' value={name} onChange={e => setName(e.target.value)} />
+              <input type="email"placeholder='Email' value={email} onChange={e => setEmail(e.target.value)} />
+              <input type="password"placeholder='Current Password' value={currentPassword} onChange={e => setCurrentPassword(e.target.value)} />
+              <input type="password"placeholder='New Passwordl' value={newPassword} onChange={e => setNewPassword(e.target.value)} />
+              <input type="password"placeholder='Confirm Passwordl' value={confirmNewPassword} onChange={e => setConfirmNewPassword(e.target.value)} />
+              <button type="submit" className= 'btn primary'> Update details</button>
+              
+
+            </form>
+          </div>
+        </div>
+    </section>
+  );
+};
+
+export default UserProfile
