@@ -33,7 +33,7 @@ const POST_CATEGORIES = ["Nuestra Historia", "Panes del mundo", "Tortas Artesana
       <div className="container">
         <h2>Create Post</h2>
         <p className="form_error-message">
-          This is an error message
+          
         </p>
         <form className="form create-post_form">
           <input type="text" placeholder='Tittle' value ={title} onChange={e => setTitle(e.target.value)} autoFocus/>
@@ -44,7 +44,7 @@ const POST_CATEGORIES = ["Nuestra Historia", "Panes del mundo", "Tortas Artesana
           </select>
           <ReactQuill modules ={modules} formats={formats} value={description} onChange={setDescription}/>
           < input type="file" onChange={e => setThumbnail(e.target.files[0])} accept='png, jpg, jpeg' />
-          <button type="submit" className='btn primary'>Create</button>
+          <button type="submit" className='btn primary_01'>Create</button>
         </form> 
       </div>
     </section>

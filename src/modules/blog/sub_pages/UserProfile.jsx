@@ -21,7 +21,7 @@ export const UserProfile = () =>  {
         <div className="profile_details">
           <div className="avatar_wrapper">
             <div className="profile_avatar">
-              <img src={avatar} alt="" />
+              <img className= "img__user" src={avatar} alt="" />
             </div>
             {/* form to update avatar*/}
             <form className="avatar_form">
@@ -32,6 +32,7 @@ export const UserProfile = () =>  {
             </div>
 
             <h1>Ana Abelino</h1>
+            
             {/*Form to update user details*/} 
             <form className="form profile_form">
               <p className="form_error-message">Error</p>
