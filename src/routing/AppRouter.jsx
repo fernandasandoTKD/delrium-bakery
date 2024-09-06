@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import logo from '../assets/logo.png';
 import { useContext } from "react";
-import { ShoppingPage } from "../modules/shopping/ShoppingPage";
+import ShoppingPage from "../modules/shopping/ShoppingPage";
 import { UsersPage } from "../modules/users/UsersPage";
 import { NavLink } from "react-router-dom";
 import { Navbar, Nav ,Container} from 'react-bootstrap';
