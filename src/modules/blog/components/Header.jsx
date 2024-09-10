@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {Link} from "react-router-dom"
 import Logo from '../../../assets/logo.png'
 import { FaBars } from "react-icons/fa6"
@@ -7,6 +7,18 @@ import '../css/stylesblog.css'
 
 
 const Header = () => {
+  const [isNavshowing, setIsNavShowing] = useState (window.innerWidth > 800 ? true : false)
+  
+  const closeNavHandler = () => {
+    if (window.innerWidth < 800 ) {
+      setIsNavShowing (false) ;
+    } else {
+      setIsNavShowing (true)
+    }
+  }
+
+
+
   return (
     
     <nav>
@@ -20,8 +32,8 @@ const Header = () => {
           
         </ul>
 
-        <button className='nav__toggle-btn'>
-          <AiOutlineClose/> 
+        <button className='nav__toggle-btn' onClick={()=> setIsNavShowing(!isNavshowing)}>
+          {isNavshowing ? <AiOutlineClose /> : <faBars />}
         </button>
       </div>
     </nav>
