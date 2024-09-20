@@ -7,8 +7,8 @@ import { NavLink } from "react-router-dom";
 import { Navbar, Nav ,Container} from 'react-bootstrap';
 import { ProductsPage } from "../modules/products/ProductsPage";
 import { QuotesPages } from "../modules/quotes/QuotesPages";
-import { ClassesPages } from "../modules/classes/ClassesPages";
 import { ErrorPage } from "../modules/error/ErrorPage";
+import { CustomerView } from "../modules/classes/public/CustomerView"
 
 export const AppRouter = () => {
 
@@ -46,7 +46,7 @@ export const AppRouter = () => {
           <Route path='/shopping' element={<div className="content"><ShoppingPage /></div>}></Route>
           <Route path='/users' element={<div className="content">< UsersPage/></div>}></Route>
           <Route path='/products' element={<div className="content"><ProductsPage /></div>}></Route>
-          <Route path='/classes' element={<div className="content">< ClassesPages/></div>}></Route>
+          <Route path='/classes' element={<div className="content">< CustomerView/></div>}></Route>
           <Route path='/quotes' element={<div className="content">< QuotesPages/></div>}></Route>
           <Route path='*' element={<ErrorPage />}></Route>
         </Routes>
