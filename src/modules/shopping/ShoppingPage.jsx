@@ -11,7 +11,8 @@ const ShoppingPage = () => {
   };
   return (
     // <div>
-    <div className="container-fluid shopping">
+    <div className="container">
+      <div className="container-fluid shopping">
         {/* <h1>Shopping Page</h1> */}
         <div className="row cotenedor">
           <div className="col-9">
@@ -36,6 +37,7 @@ const ShoppingPage = () => {
         </div>
         {/* </div> */}
       </div>
+    </div>
   );
 };
 

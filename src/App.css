@@ -1,11 +1,17 @@
 * {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
+ 
 }
 
 body {
   background-color: rgb(227, 219, 219);
   color: black;
   font-family: Arial, sans-serif;
+}
+
+.content{
+  min-height: 80vh;
+  justify-content: center;
+  align-items: center;
 }
