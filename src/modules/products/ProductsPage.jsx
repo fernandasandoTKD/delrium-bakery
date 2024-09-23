@@ -1,4 +1,3 @@
-import React from 'react'
 import styles from './productsStyles.module.css'
 import logo from '../../assets/logo.png'
 export const ProductsPage = () => {
