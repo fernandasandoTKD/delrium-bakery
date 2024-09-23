@@ -23,7 +23,7 @@ export const NavbarPublic = () => {
               <Nav.Link href='/products' className="text-light fs-5">Productos</Nav.Link>
               <Nav.Link href='/login' className="text-light fs-5"></Nav.Link>
                 <Nav.Link href='/shopping' className="text-light fs-5">Compras</Nav.Link>
-                <Nav.Link href="/about" className="text-light fs-5">Sobre nosotros</Nav.Link>
+                <Nav.Link href="/blog" className="text-light fs-5">Blog</Nav.Link>
               </Nav>
               <Nav className="ms-auto">
                 <Nav.Link href="/login" className="text-light fs-5">
