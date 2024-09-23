@@ -1,13 +1,14 @@
 import React, { useState } from 'react'
 import {Link} from "react-router-dom"
 import Logo from '../../../assets/logo.png'
-import { FaBars } from "react-icons/fa6"
+import  {FaBars} from "react-icons/fa"
 import {AiOutlineClose} from "react-icons/ai"
 import '../css/stylesblog.css'
 
 
 const Header = () => {
-  const [isNavshowing, setIsNavShowing] = useState (window.innerWidth > 800 ? true : false)
+  
+  const [isNavshowing, setIsNavShowing] = useState (window.innerWidth > 800 ? true : false);
   
   const closeNavHandler = () => {
     if (window.innerWidth < 800 ) {
@@ -23,17 +24,16 @@ const Header = () => {
     
     <nav>
       <div className="container nav__container">
-      
-        <ul className="nav__menu">
-          <li> <Link to= "/profile/sdfsdf"> Alberto Angel </Link></li>
-          <li> <Link to= "/create"> Create Post </Link></li>
-          <li> <Link to= "/authors"> Authors </Link></li>
-          <li> <Link to= "/logout"> Logout </Link></li>
+      {isNavshowing && <ul className="nav__menu">
+          <li> <Link to= "/profile/sdfsdf" onClick={closeNavHandler}> Profile </Link></li>
+          <li> <Link to= "/create" onClick={closeNavHandler}> Create Post </Link></li>
+          <li> <Link to= "/authors" onClick={closeNavHandler}> Authors </Link></li>
+          <li> <Link to= "/logout" onClick={closeNavHandler}> Logout </Link></li>
           
-        </ul>
+        </ul>}
 
         <button className='nav__toggle-btn' onClick={()=> setIsNavShowing(!isNavshowing)}>
-          {isNavshowing ? <AiOutlineClose /> : <faBars />}
+          {isNavshowing ? <AiOutlineClose /> : <FaBars />}
         </button>
       </div>
     </nav>
