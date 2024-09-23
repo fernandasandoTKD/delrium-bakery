@@ -11,10 +11,7 @@ const Footer = () => {
           <li><Link to="/posts/categories/Artesanal"> Tortas Artesanales </Link></li>
           <li><Link to="/posts/categories/Arte en galletas">Arte en galletas</Link></li>
       </ul>
-      <div className='footer__copyright'>
-        <small> All Rights Reserved &copy; Copyright, Delirium Bakery.</small>
-
-      </div>
+    
     </footer>
   )
 }
