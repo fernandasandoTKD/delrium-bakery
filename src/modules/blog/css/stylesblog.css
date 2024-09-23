@@ -91,7 +91,7 @@ section {
 }
 
 .container {
-  width: var(--container-width-lg);
+ 
   margin-inline: auto;
 }
 
@@ -100,7 +100,7 @@ section {
   width: fit-content;
   padding: 0.5rem 1rem;
   border-radius: var(--radius-2);
-  background: var(--color-white);
+ 
   font-weight: 500;
   cursor: pointer;
   transition: var(--transition);
