@@ -1,5 +1,5 @@
 
-import { ClassCard } from './ClassCard';
+import { ClassCard } from './ClassCard'; // También exportaremos ClassCard como nombrada
 
 export const ClassList = ({ classes, onSelect }) => {
   return (

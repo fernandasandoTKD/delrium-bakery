@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './ClassesPublicStyles.module.css';
-
-
-
-
+import img1 from './img1.jpg';
+import img2 from './img2.jpg';
 
 export const CustomerView = () => {
   const [classes] = useState([
@@ -11,27 +9,38 @@ export const CustomerView = () => {
     { id: 2, name: 'Pastelería Avanzada', description: 'Clases avanzadas de pastelería', date: '2024-09-23', time: '2:00 PM', duration: 4, instructor: 'María Gómez' },
   ]);
 
-  const [myClasses, setMyClasses] = useState([]);
+  // Cargar clases desde localStorage
+  const [myClasses, setMyClasses] = useState(() => {
+    const storedClasses = localStorage.getItem('myClasses');
+    return storedClasses ? JSON.parse(storedClasses) : [];
+  });
+
+  // Guardar las clases en localStorage cuando se agregan o eliminan
+  useEffect(() => {
+    localStorage.setItem('myClasses', JSON.stringify(myClasses));
+  }, [myClasses]);
 
   const handleAddClass = (classItem) => {
-    setMyClasses([...myClasses, classItem]);
+    if (!myClasses.find((cls) => cls.id === classItem.id)) {
+      setMyClasses([...myClasses, classItem]);
+    }
   };
 
   const handleRemoveClass = (id) => {
     setMyClasses(myClasses.filter((classItem) => classItem.id !== id));
   };
 
-  
+  const classImages = [img1, img2];
+
   return (
     <div className="container mt-4">
       <h1>Clases Disponibles</h1>
-      <div className="row">
+      <div className={`container row ${styles.Container}`}>
         {classes.length > 0 ? (
           classes.map((classItem, index) => (
-            <div className="col-md-4 mb-4" key={classItem.id}>
-              <div className={styles.card}>
-                {/* Carga dinámica de la imagen con require */}
-                <div className={styles.card_landing} style={{ '--i': `url(./src/modules/classes/public/${classItem.image})` }}>
+            <div className={`col-md-4 ${styles.cardContainer}`} key={classItem.id}>
+              <div className={`${styles.card} ${index === 0 ? styles.cardLeft : styles.cardRight}`}>
+                <div className={styles.card_landing} style={{ '--i': `url(${classImages[index]})` }}>
                   <h6>{classItem.name}</h6>
                 </div>
                 <div className={styles.card_info}>
