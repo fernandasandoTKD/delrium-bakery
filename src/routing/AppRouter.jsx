@@ -14,14 +14,9 @@ import { EditPost } from "../modules/blog/sub_pages/EditPost.jsx"
 import { DeletePost } from "../modules/blog/sub_pages/DeletePost.jsx"
 import { Login } from "../components/Login";
 import { Footer } from "../components/Footer";
-import { AuthProvider } from "../context/AuthProvider";
-import PrivatePage from "../private/components/PrivatePage";
-import PrivateRoute from "../private/components/PrivateRoute";
-import { NavbarPublic } from "../components/NavbarPublic";
-import { NavbarPrivate } from "../components/NavbarPrivate";
-import useAuth from "../hooks/useAuth"; // Asegúrate de que este import esté correcto
-import { Sidenavbar } from "../components/Sidenavbar.jsx";
-import { Navigate } from 'react-router-dom';
+import { AuthProvider, useAuth } from "../context/AuthContext";
+/* import PrivateRoute from "../private/components/PrivateRoute"; */
+
 
 
 export const AppRouter = () => {
@@ -62,27 +57,25 @@ const MainContent = () => {
       )}
 
       <Routes>
-        {/* Rutas públicas */}
-        <Route path='/' element={<div className="content"><ProductsPage /></div>} />
-        <Route path='/products' element={<div className="content"><ProductsPage /></div>} />
-        <Route path='/login' element={<div className="content"><Login /></div>} />
-        <Route path='/blog' element={<div className="content"><BlogPage /></div>} />
-        <Route path='/posts/:id' element={<div className="content"><PostDetail /></div>} />
-        <Route path='/authors' element={<div className="content"><Authors /></div>} />
-        <Route path='/post/categories/:category' element={<div className="content"><CategoryPosts /></div>} />
-
-        {/* Rutas privadas (requieren autenticación) */}
-        <Route path='/shopping' element={<PrivateRoute element={<div className="content"><ShoppingPage /></div>} />} />
-        <Route path='/private' element={<PrivateRoute element={<div className="content"><PrivatePage /></div>} />} />
-        <Route path='/create' element={<PrivateRoute element={<div className="content"><CreatePost /></div>} allowedRoles={['admin', 'user']} />} />
-        <Route path='/posts/user/:id' element={<PrivateRoute element={<div className="content"><AuthorPosts /></div>} />} />
-        <Route path='/myposts/:id' element={<PrivateRoute element={<div className="content"><Dashboard /></div>} />} />
-        <Route path='/profile/:id' element={<PrivateRoute element={<div className="content"><UserProfile /></div>} />} />
-        <Route path='/posts/:id/edit' element={<PrivateRoute element={<div className="content"><EditPost /></div>} allowedRoles={['admin', 'user']} />} />
-        <Route path='/posts/:id/delete' element={<PrivateRoute element={<div className="content"><DeletePost /></div>} allowedRoles={['admin']} />} />
-
-        {/* Ruta de error */}
-        <Route path='*' element={<div className="content"><ErrorPage /></div>} />
+          <Route path='/' element={<div className="content"><ProductsPage /></div>}></Route>
+        {/*   <Route path='/shopping' element={<PrivateRoute element={<div className="content"><ShoppingPage /></div>} />} /> */}
+          <Route path='/products' element={<div className="content"><ProductsPage /></div>}></Route>
+          <Route path='/shopping' element={<div className="content">< ShoppingPage/></div>}></Route>
+          <Route path='/classes' element={<div className="content">< PublicClassView/></div>}></Route>
+          <Route path='/login' element={<div className="content">< Login/></div>}></Route>
+          <Route path="/blog" element={<div className="content"><BlogPage/></div>}></Route>
+          <Route path='/posts/:id' element={<div className="content">< PostDetail/></div>}></Route>
+          <Route path='/authors' element={<div className="content">< Authors/></div>}></Route>
+          <Route path='/create' element={<div className="content">< CreatePost/></div>}></Route>
+          <Route path='/post/categories/:category' element={<div className="content">< CategoryPosts/></div>}></Route>
+          <Route path='/posts/user/:id' element={<div className="content"><AuthorPosts/></div>}></Route>
+          <Route path='/myposts/:id' element={<div className="content"><Dashboard/></div>}></Route>
+          <Route path='/profile/:id' element={<div className="content"><UserProfile d/></div>}></Route>
+          <Route path='/posts/:id/edit' element={<div className="content">< EditPost/></div>}></Route>
+          <Route path='/posts/:id/delete' element={<div className="content">< DeletePost/></div>}></Route>
+          <Route path='*' element={<div className="content"> <ErrorPage /></div>}></Route>
+          <Route path='/uclasses' element={<div className="content">< CustomerView/></div>}></Route>
+          <Route path='/pclasses' element={<div className="content">< AdminView/></div>}></Route>
       </Routes>
       <Footer />
     </>
