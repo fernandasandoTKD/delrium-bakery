@@ -2,7 +2,6 @@ import { BrowserRouter as Router, Routes, Route, BrowserRouter } from "react-rou
 
 import ShoppingPage from "../modules/shopping/ShoppingPage";
 import { ProductsPage } from "../modules/products/ProductsPage";
-import { ClassesPages } from "../modules/classes/ClassesPages";
 import { ErrorPage } from "../modules/error/ErrorPage";
 import {BlogPage} from "../modules/blog/BlogPage";
 import {PostDetail} from "../modules/blog/sub_pages/PostDetail.jsx"
@@ -20,6 +19,9 @@ import { Footer } from "../components/Footer";
 import { AuthProvider, useAuth } from "../context/AuthContext";
 /* import PrivateRoute from "../private/components/PrivateRoute"; */
 
+import { PublicClassView } from "../modules/classes/public/PublicClassView"
+import { CustomerView } from "../private/classes/privateUser/CustomerView";
+import { AdminView } from "../private/classes/privateAdmin/AdminView";
 
 
 export const AppRouter = () => {
@@ -35,6 +37,7 @@ export const AppRouter = () => {
         {/*   <Route path='/shopping' element={<PrivateRoute element={<div className="content"><ShoppingPage /></div>} />} /> */}
           <Route path='/products' element={<div className="content"><ProductsPage /></div>}></Route>
           <Route path='/shopping' element={<div className="content">< ShoppingPage/></div>}></Route>
+          <Route path='/classes' element={<div className="content">< PublicClassView/></div>}></Route>
           <Route path='/login' element={<div className="content">< Login/></div>}></Route>
           <Route path="/blog" element={<div className="content"><BlogPage/></div>}></Route>
           <Route path='/posts/:id' element={<div className="content">< PostDetail/></div>}></Route>
@@ -47,6 +50,8 @@ export const AppRouter = () => {
           <Route path='/posts/:id/edit' element={<div className="content">< EditPost/></div>}></Route>
           <Route path='/posts/:id/delete' element={<div className="content">< DeletePost/></div>}></Route>
           <Route path='*' element={<div className="content"> <ErrorPage /></div>}></Route>
+          <Route path='/uclasses' element={<div className="content">< CustomerView/></div>}></Route>
+          <Route path='/pclasses' element={<div className="content">< AdminView/></div>}></Route>
       </Routes>
       <Footer/>
      </Router>

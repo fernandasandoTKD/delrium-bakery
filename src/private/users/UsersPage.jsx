@@ -21,7 +21,7 @@ export const UsersPage = () => {
       {/* Formulario de Inicio de Sesión */}
       <div className={`${styles.formContainer} ${styles.signIn}`}>
         <form>
-          <h1>Sign I</h1>
+          <h1>Sign In</h1>
           <div className={styles.socialIcons}>
             <a href="#" target="_blank" rel="noopener noreferrer">
               <i className="fab fa-facebook fa-2x" style={{ color: '#4267B2' }}></i>
