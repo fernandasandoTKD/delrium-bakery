@@ -6,7 +6,7 @@ export const Footer = () => {
         <div>
             {/*    <!-- footer --> */}
             <footer className={`bg-success text-light ${styles.footer} `}>
-                <p> © Delirum Bakery - Derechos reservados - 2024</p>
+                <p> © Delirium Bakery - Derechos reservados - 2024</p>
                 <div>
                     <a href="https://github.com/fernandasandoTKD" target="_blank"><i class="fa-brands fa-facebook"></i></a>
                     <a href="https://www.linkedin.com/in/lufe-diaz-s/" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
