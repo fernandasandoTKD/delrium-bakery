@@ -18,10 +18,10 @@ export const Login = () => {
     // Hook para redirigir a la página de la red social
     const navigate = useNavigate();
 
-		// Monitorear cambios en logged
+/* 		// Monitorear cambios en logged
     useEffect(() => {
         console.log("Logged state changed:", logged);
-    }, [logged]);
+    }, [logged]); */
 
     const loginUser = async (e) => {
         e.preventDefault();

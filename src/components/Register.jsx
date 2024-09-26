@@ -37,9 +37,7 @@ export const Register = () => {
         const data = await request.json();
 
         // Verificar si el estado de la respuesta del backend es "created" 
-        if (request.status === 201 && data.status === "Created") {
-            setSaved("saved");
-
+        if (request.status === 201) {
             // Mostrar modal de éxito
             Swal.fire({
                 title: data.message,
@@ -49,6 +47,8 @@ export const Register = () => {
                 // Redirigir después de cerrar el modal
                 navigate("/login");
             });
+            setSaved("saved");
+
         } else {
             setSaved("error");
 
