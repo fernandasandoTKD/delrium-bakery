@@ -22,12 +22,12 @@ export const NavbarPrivate = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
-            <Nav.Link as={NavLink} to='/products' className="text-light fs-5">Productos</Nav.Link>
-            <Nav.Link as={NavLink} to='/shopping' className="text-light fs-5">Compras</Nav.Link>
+            <Nav.Link as={NavLink} to='/uclasses' className="text-light fs-5">Clases</Nav.Link>
+            {/* <Nav.Link as={NavLink} to='/shopping' className="text-light fs-5">Compras</Nav.Link> */}
             {/* {user.role === 'admin' && (
               <Nav.Link as={NavLink} to='/admin' className="text-light fs-5">Admin</Nav.Link>
             )} */}
-            <Nav.Link as={NavLink} to="/about" className="text-light fs-5">Sobre nosotros</Nav.Link>
+           {/*  <Nav.Link as={NavLink} to="/about" className="text-light fs-5">Sobre nosotros</Nav.Link> */}
           </Nav>
         </Navbar.Collapse>
       </Container>

@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import PropTypes from "prop-types";
+import { useNavigate } from 'react-router-dom';
 
 const AuthContext = createContext();
 
@@ -19,20 +20,25 @@ export const AuthProvider = ({ children }) => {
     }, []);
 
     const login = (userData) => {
-        setIsAuthenticated(true);
-        console.log(isAuthenticated);
-        
-        setAuth(userData);
-        localStorage.setItem("token", userData.token); // Guarda el token
-        localStorage.setItem("user", JSON.stringify(userData)); // Guarda el usuario
+        // Actualizar el estado inmediatamente después del login
+        setAuth(userData); // Establecer datos de usuario
+        setIsAuthenticated(true); // Establecer estado de autenticación en true
+
+        // Guardar token y usuario en localStorage
+        localStorage.setItem("token", userData.token); 
+        localStorage.setItem("user", JSON.stringify(userData)); 
+
+        console.log("Logged in:", userData);
     };
 
     const logout = () => {
+        // Restablecer estado de autenticación y usuario
         setIsAuthenticated(false);
         setAuth({});
-        localStorage.removeItem("token"); // Limpia el token
-        localStorage.removeItem("user"); // Limpia el usuario
-       /*  navigate('/products'); */
+
+        // Limpiar el token y el usuario de localStorage
+        localStorage.removeItem("token"); 
+        localStorage.removeItem("user"); 
     };
 
     return (

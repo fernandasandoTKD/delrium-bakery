@@ -8,20 +8,29 @@ import { useNavigate } from 'react-router-dom';
 
 export const Login = () => {
     const { form, changed, resetForm } = useForm({ email: "", password: "" });
-
     const [logged, setLogged] = useState("not logged");
-
     const { setAuth } = useAuth();
     const containerRef = useRef(null);
     const [isRegister, setIsRegister] = useState(false);
-
-    // Hook para redirigir a la página de la red social
     const navigate = useNavigate();
 
-/* 		// Monitorear cambios en logged
+  // Usar useEffect para redirigir si ya hay un token en localStorage
     useEffect(() => {
-        console.log("Logged state changed:", logged);
-    }, [logged]); */
+        const token = localStorage.getItem('token');
+        const user = localStorage.getItem('user');
+console.log(token)
+console.log(user)
+        if (token && user) {
+            const userData = JSON.parse(user);  
+            setAuth(userData); 
+            if (userData.role === 'admin') {
+                navigate('/private/pclasses'); // Redirigir a admin
+            } else {
+                navigate('/private/uclasses'); // Redirigir a usuario
+            }
+        }
+    }, [navigate, setAuth]);
+
 
     const loginUser = async (e) => {
         e.preventDefault();
@@ -36,20 +45,17 @@ export const Login = () => {
         });
         const data = await request.json();
 
-        if (data.message === "Inicio de sesión exitoso") {
-            if (data.token && data.user) {
-                localStorage.setItem("token", data.token);
-                localStorage.setItem("user", JSON.stringify(data.user));
-                setAuth(data.user);  // Establece la autenticación
-                setLogged("logged");  // Cambia el estado a "logged"
-                resetForm();
+        if (data.message === "Inicio de sesión exitoso" && data.token && data.user) {
+            // Guardar token y usuario en localStorage
+            localStorage.setItem("token", data.token);
+            localStorage.setItem("user", JSON.stringify(data.user));
+ 						// Actualizar el estado de autenticación
+            setAuth(data.user);
+           
+            setLogged("logged");
+            resetForm();
 
-                setTimeout(() => {
-                    navigate("/private");
-                }, 1000);
-            } else {
-                console.error("Token o usuario no recibido correctamente.");
-            }
+           
         } else {
             setLogged("error");
         }
@@ -59,7 +65,7 @@ export const Login = () => {
         if (containerRef.current) {
             containerRef.current.classList.add(styles.active);
         }
-        setIsRegister(true)
+        setIsRegister(true);
     };
 
     const handleLoginClick = () => {
@@ -68,7 +74,6 @@ export const Login = () => {
         }
         setIsRegister(false);
     };
-
 
     return (
         <div className={styles.container} ref={containerRef}>
@@ -133,4 +138,4 @@ export const Login = () => {
             </div>
         </div>
     );
-};      
+};
