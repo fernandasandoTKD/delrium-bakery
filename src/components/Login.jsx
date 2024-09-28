@@ -1,8 +1,8 @@
 import React, { useRef } from 'react';
-import styles from './usersStyles.module.css';
+import styles from './componentsStyles.module.css'
 
-export const UsersPage = () => {
-  const containerRef = useRef(null);
+export const Login = () => {
+    const containerRef = useRef(null);
 
   const handleRegisterClick = () => {
     if (containerRef.current) {
@@ -17,7 +17,8 @@ export const UsersPage = () => {
   };
 
   return (
-    <div className={styles.container} ref={containerRef}>
+    <div className="container">
+      <div className={styles.container} ref={containerRef}>
       {/* Formulario de Inicio de Sesión */}
       <div className={`${styles.formContainer} ${styles.signIn}`}>
         <form>
@@ -77,7 +78,7 @@ export const UsersPage = () => {
         </div>
       </div>
     </div>
-  );
-};
-
-export default UsersPage;
+    </div>
+    
+  )
+}

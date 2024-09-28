@@ -25,6 +25,7 @@ const ShoppingPage = () => {
   };
 
   return (
+<<<<<<< HEAD
     <div className="container-fluid shopping">
       <div className="row cotenedor">
         <div className="col-9">
@@ -32,6 +33,17 @@ const ShoppingPage = () => {
           <div className="d-flex flex-wrap">
             {products.length > 0 ? (
               products.map(product => (
+=======
+    // <div>
+    <div className="container">
+      <div className="container-fluid shopping">
+        {/* <h1>Shopping Page</h1> */}
+        <div className="row cotenedor">
+          <div className="col-9">
+            <h2 className='ml-2 mt-4'>Tu Carrito</h2>
+            <div className="d-flex flex-wrap">
+              {products.map(product => (
+>>>>>>> ba09ffd43a8fa5ef09f30a007117b86f07033eb2
                 <ProductCard
                   key={product._id}  // Asegúrate de usar el ID correcto del producto desde tu backend
                   product={product}
