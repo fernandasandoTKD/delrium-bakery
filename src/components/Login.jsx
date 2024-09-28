@@ -9,27 +9,22 @@ import { useNavigate } from 'react-router-dom';
 export const Login = () => {
     const { form, changed, resetForm } = useForm({ email: "", password: "" });
     const [logged, setLogged] = useState("not logged");
-    const { setAuth } = useAuth();
+    const { setAuth, setIsAuthenticated } = useAuth();
     const containerRef = useRef(null);
     const [isRegister, setIsRegister] = useState(false);
     const navigate = useNavigate();
 
-  // Usar useEffect para redirigir si ya hay un token en localStorage
-    useEffect(() => {
+/*       // Usar useEffect para redirigir si ya hay un token en localStorage
+      useEffect(() => {
         const token = localStorage.getItem('token');
         const user = localStorage.getItem('user');
-console.log(token)
-console.log(user)
+    
         if (token && user) {
-            const userData = JSON.parse(user);  
-            setAuth(userData); 
-            if (userData.role === 'admin') {
-                navigate('/private/pclasses'); // Redirigir a admin
-            } else {
-                navigate('/private/uclasses'); // Redirigir a usuario
-            }
+          const userData = JSON.parse(user);
+          setAuth(userData);
+          navigate(userData.role === 'admin' ? '/private/pclasses' : '/private/uclasses');
         }
-    }, [navigate, setAuth]);
+      }, [navigate, setAuth]); */
 
 
     const loginUser = async (e) => {
@@ -49,13 +44,16 @@ console.log(user)
             // Guardar token y usuario en localStorage
             localStorage.setItem("token", data.token);
             localStorage.setItem("user", JSON.stringify(data.user));
- 						// Actualizar el estado de autenticación
+            // Actualizar el estado de autenticación
             setAuth(data.user);
-           
+            setIsAuthenticated(true);
+
             setLogged("logged");
             resetForm();
 
-           
+            navigate(data.user.role === 'admin' ? '/private/pclasses' : '/private/uclasses');
+
+
         } else {
             setLogged("error");
         }
@@ -80,6 +78,12 @@ console.log(user)
             {/* Formulario de Inicio de Sesión */}
             {!isRegister && (
                 <div className={`${styles.formContainer} ${styles.signIn}`}>
+                    {logged == "logged" ? (
+                        <strong className='alert alert-success'>!Usuario autenticado correctamente¡</strong>
+                    ) : ''}
+                    {logged == "error" ? (
+                        <strong className='alert alert-danger'>¡Verifica tus credenciales!</strong>
+                    ) : ''}
                     <form onSubmit={loginUser}>
                         <h1>Sign In</h1>
                         <div className={styles.socialIcons}>

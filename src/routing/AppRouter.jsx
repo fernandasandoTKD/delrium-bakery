@@ -14,7 +14,12 @@ import { AuthProvider } from '../context/AuthProvider';
 import PrivateRoute from '../private/components/PrivateRoute.jsx';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import PrivatePage from '../private/components/PrivatePage.jsx';
+import {PrivatePage} from '../private/components/PrivatePage.jsx';
+import {UsersPage} from '../private/users/UsersPage.jsx';
+import {BlogPage} from "../modules/blog/BlogPage";
+import {PostDetail} from "../modules/blog/sub_pages/PostDetail.jsx"
+import { PublicClassView } from "../modules/classes/public/PublicClassView"
+import ShoppingPage from "../modules/shopping/ShoppingPage";
 
 
 const AppRouter = () => {
@@ -28,19 +33,23 @@ const AppRouter = () => {
 };
 
 const MainContent = () => {
-  const { isAuthenticated, auth, logout } = useAuth();
+  const { isAuthenticated, auth, setAuth } = useAuth();
   const navigate = useNavigate();
-
+  console.log(isAuthenticated);
   useEffect(() => {
-    if (isAuthenticated && auth?.role) {
-      // Asegurarse de que el estado de autenticación esté listo antes de redirigir
-      if (auth.role === 'admin') {
-        navigate('/private/pclasses');
-      } else if (auth.role === 'user') {
-        navigate('/private/uclasses');
+    const token = localStorage.getItem('token');
+    const user = localStorage.getItem('user');
+
+    if (token && user) {
+      const userData = JSON.parse(user);
+      setAuth(userData);
+
+      // Si el usuario ya está autenticado, redirigir según su rol
+      if (!isAuthenticated) {
+        navigate(userData.role === 'admin' ? '/private/pclasses' : '/private/uclasses');
       }
     }
-  }, [isAuthenticated, auth, navigate]);  // Se asegura de que isAuthenticated y auth estén listos antes de la redirección
+  }, [isAuthenticated, navigate, setAuth]);  // Se asegura de que isAuthenticated y auth estén listos antes de la redirección
 
   return (
 
@@ -48,8 +57,7 @@ const MainContent = () => {
       
           {isAuthenticated ? (
               <>
-                  {auth?.role === 'admin' ? <Sidenavbar /> : <NavbarPrivate />}
-                  <button onClick={logout}>Logout</button>
+                  {auth?.role === 'admin' ? <Sidenavbar/> : <NavbarPrivate />}
               </>
           ) : (
               <NavbarPublic />
@@ -58,10 +66,15 @@ const MainContent = () => {
           <Routes>
             <Route path="/products" element={<ProductsPage />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/blog" element={<div className="content"><BlogPage/></div>}></Route>
+            <Route path='/posts/:id' element={<div className="content">< PostDetail/></div>}></Route>
+            <Route path='/classes' element={<div className="content">< PublicClassView/></div>}></Route>
+            <Route path='/shopping' element={<div className="content">< ShoppingPage/></div>}></Route>
 
             {/* Ruta para la página privada */}
-            <Route path="/private" element={<PrivateRoute allowedRoles={['user', 'admin']} element={<PrivatePage />} />}>
+            <Route path="/private" element={<div className="content"><PrivateRoute allowedRoles={['user', 'admin']} element={<PrivatePage />} /></div>}>
                 <Route path="pclasses" element={<PrivateRoute allowedRoles={['admin']} element={<AdminView />} />} />
+                <Route path="users" element={<PrivateRoute allowedRoles={['admin']} element={< UsersPage/>} />} />
                 <Route path="uclasses" element={<PrivateRoute allowedRoles={['user']} element={<CustomerView />} />} />
             </Route>
 

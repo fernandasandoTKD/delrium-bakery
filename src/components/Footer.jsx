@@ -3,7 +3,7 @@ import styles from './componentsStyles.module.css'
 
 export const Footer = () => {
     return (
-        <div>
+        <div className={styles.footer}>
             {/*    <!-- footer --> */}
             <footer className={`bg-success text-light ${styles.footer} `}>
                 <p> © Delirium Bakery - Derechos reservados - 2024</p>

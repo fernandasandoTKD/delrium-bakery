@@ -3,9 +3,7 @@ import { Outlet } from 'react-router-dom';
 
 export const PrivatePage = () => {
   return (
-    <div className='container'>
-            <h1>Esta es una página privada</h1>
-            <p>Solo los usuarios autenticados pueden ver esto.</p>
+    <div className='container' style={{ marginTop: '100px' }}>
              {/* Aquí se renderizarán las rutas anidadas */}
       <Outlet />
     </div>

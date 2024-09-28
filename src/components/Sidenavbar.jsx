@@ -1,62 +1,89 @@
-import React from 'react'
-import { useState } from 'react';
-import Button from 'react-bootstrap/Button';
-import Offcanvas from 'react-bootstrap/Offcanvas';
-import PrivatePage from '../private/components/PrivatePage';
+import React, { useState, useRef } from 'react';
+import { NavLink } from 'react-router-dom';
+import { PiHandDuotone } from "react-icons/pi";
+import useAuth from '../hooks/useAuth';
+import logo from '../assets/logo.png';
 
 export const Sidenavbar = () => {
-  /* const [show, setShow] = useState(false); */
+  const [show, setShow] = useState(true);
+  const { auth, logout } = useAuth(); // Estado para controlar la visibilidad
+
+  const offcanvasRef = useRef(null);
+
+  const closeOffcanvas = () => {
+    const offcanvas = bootstrap.Offcanvas.getInstance(offcanvasRef.current);
+    if (offcanvas) {
+      offcanvas.hide();
+    }
+  };
 
   return (
-    <div className="container-fluid">
-      <div className="row">
-        <div className="col-auto col-sm-2 bg-primary d-flex flex-column justify-content-between min-vh-100">
-          <div>
-            <a href="" className='text-decoration-none ms-4 d-flex align-item-center text-white d-none d-sm-inline'>
-              <span className='fs-4'>Side Menu</span>
-            </a>
-            <hr className='text-white d-none d-sm-block' />
-            <ul
-              className="nav nav-pills flex-column"
-            >
-              <li className="nav-item text-white">
-                <a href="#" className="nav-link active" aria-current="page"
-                >Active</a
-                >
-              </li>
-              <li className="nav-item text-white">
-                <a href="#" className="nav-link">Link</a>
-              </li>
-              <li className="nav-item text-white" data-bs-toogle="collapse">
-                <a href="#" className="nav-link">Disabled</a>
-
-              </li>
-
-            </ul>
-
-          </div>
-          <div className="dropdown open">
-            <a
-              className="btn btn-secondary dropdown-toggle text-white"
-              type="button"
-              id="triggerId"
-              data-bs-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
-              <span>Yousaf</span>
-            </a>
-            <div className="dropdown-menu" aria-labelledby="triggerId">
-              <a className="dropdown-item" href="#">Action</a>
-              <a className="dropdown-item disabled" href="#">Disabled action</a>
+    <div className= "container-fluid">
+      <nav className="navbar bg-success fixed-top">
+        <div className="container-fluid">
+          <a className="navbar-brand" href="#">
+            <img alt="" src={logo} width="60" height="60" className="d-inline-block align-top" />
+          </a>
+          <h4 className="text-white mt-2 d-none d-md-block">Tradición artesanal en productos de panadería y respostería.</h4>
+          <button
+            className="navbar-toggler"
+            type="button"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#offcanvasNavbar"
+            aria-controls="offcanvasNavbar"
+            aria-label="Toggle navigation"
+          >
+            <span className="navbar-toggler-icon"></span>
+          </button>
+          <div
+            className="offcanvas offcanvas-end"
+            tabIndex="-1"
+            id="offcanvasNavbar"
+            aria-labelledby="offcanvasNavbarLabel"
+            ref={offcanvasRef} // Reference for the offcanvas
+          >
+            <div className="offcanvas-header">
+              <h5 className="offcanvas-title" id="offcanvasNavbarLabel">Hola, {auth.username}</h5>
+              <PiHandDuotone className="fs-3" />
+              <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div className="offcanvas-body">
+              <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
+                <li className="nav-item">
+                  <NavLink
+                    className="nav-link"
+                    to="/private/pclasses"
+                    activeClassName="active"
+                    onClick={closeOffcanvas} // Close on click
+                  >
+                    Clases y Talleres
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink
+                    className="nav-link"
+                    to="/private/users"
+                    activeClassName="active"
+                    onClick={closeOffcanvas} // Close on click
+                  >
+                    Usuarios
+                  </NavLink>
+                </li>
+                <li className="nav-item dropdown">
+                  <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Perfil
+                  </a>
+                  <ul className="dropdown-menu">
+                    <li><a className="dropdown-item" href="#">Detalle</a></li>
+                    <li><a className="dropdown-item" href="#">Cerrar sesión</a></li>
+                  </ul>
+                </li>
+              </ul>
             </div>
           </div>
-
         </div>
-
-      </div>
-
+      </nav>
     </div>
-  )
-}
+  );
+};
 

@@ -5,13 +5,12 @@ import useAuth from '../../hooks/useAuth';
 
 const PrivateRoute = ({ element, allowedRoles }) => {
     const { isAuthenticated, auth } = useAuth();
-
     if (!isAuthenticated) {
-        return <Navigate to="/login" />;
-    }
+       return <Navigate to="/login" />;
+    } 
 
     if (allowedRoles && !allowedRoles.includes(auth?.role)) {
-        return <Navigate to="/private" />;
+        return <Navigate to="/products" />;
     }
 
     return element;
