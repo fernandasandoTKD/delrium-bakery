@@ -23,7 +23,7 @@ import { CustomerView } from "../private/classes/privateUser/CustomerView";
 import { AdminView } from "../private/classes/privateAdmin/AdminView";
 
 
-
+export const AppRouter = () => {
   return (
 
       <AuthProvider>
@@ -56,3 +56,4 @@ import { AdminView } from "../private/classes/privateAdmin/AdminView";
       </AuthProvider>
     
   )
+}
