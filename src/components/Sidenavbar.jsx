@@ -16,6 +16,10 @@ export const Sidenavbar = () => {
       offcanvas.hide();
     }
   };
+  const handleLogout = () => {
+    logout(); // Llama a la función de cierre de sesión
+    closeOffcanvas(); // Cierra el offcanvas después de cerrar sesión
+  };
 
   return (
     <div className= "container-fluid">
@@ -75,7 +79,7 @@ export const Sidenavbar = () => {
                   </a>
                   <ul className="dropdown-menu">
                     <li><a className="dropdown-item" href="#">Detalle</a></li>
-                    <li><a className="dropdown-item" href="#">Cerrar sesión</a></li>
+                    <li><a className="dropdown-item" href="#" onClick={handleLogout}>Cerrar sesión</a></li>
                   </ul>
                 </li>
               </ul>

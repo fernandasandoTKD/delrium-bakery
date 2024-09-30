@@ -15,7 +15,7 @@ import PrivateRoute from '../private/components/PrivateRoute.jsx';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {PrivatePage} from '../private/components/PrivatePage.jsx';
-import {UsersPage} from '../private/users/UsersPage.jsx';
+import UsersPage from '../private/users/UsersPage.jsx';
 import {BlogPage} from "../modules/blog/BlogPage";
 import {PostDetail} from "../modules/blog/sub_pages/PostDetail.jsx"
 import { PublicClassView } from "../modules/classes/public/PublicClassView"
@@ -33,7 +33,7 @@ const AppRouter = () => {
 };
 
 const MainContent = () => {
-  const { isAuthenticated, auth, setAuth } = useAuth();
+  const { isAuthenticated, auth, setAuth,setIsAuthenticated  } = useAuth();
   const navigate = useNavigate();
   console.log(isAuthenticated);
   useEffect(() => {
@@ -48,8 +48,12 @@ const MainContent = () => {
       if (!isAuthenticated) {
         navigate(userData.role === 'admin' ? '/private/pclasses' : '/private/uclasses');
       }
+      /* else {
+        // Si no hay token, no está autenticado
+        setIsAuthenticated(false);
+      } */
     }
-  }, [isAuthenticated, navigate, setAuth]);  // Se asegura de que isAuthenticated y auth estén listos antes de la redirección
+  }, []);  // Se asegura de que isAuthenticated y auth estén listos antes de la redirección
 
   return (
 

@@ -10,10 +10,10 @@ export const PostDetail = () => {
       <div className="container post-detail__container">
         <div className="post-detail__header">
           <PostAuthor/>
-          <div className="post-detail__buttons">
+         {/*  <div className="post-detail__buttons">
             <Link to={`/posts/werwer/edit`} className='btn sm primary'> Edit</Link>
             <Link to={`/posts/werwer/delete`} className='btn sm danger'> Delete</Link>
-          </div>
+          </div> */}
         </div>
         <h1> El pan de chocolate es funcional? </h1>
         <div className="post-detail__thumbnail">
