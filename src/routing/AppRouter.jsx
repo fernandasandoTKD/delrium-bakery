@@ -56,6 +56,5 @@ export const AppRouter = () => {
       <Footer/>
      </Router>
       </AuthProvider>
-    
   )
 }
