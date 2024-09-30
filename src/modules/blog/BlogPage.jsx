@@ -9,7 +9,7 @@ import Footer from './components/Footer'
 export const BlogPage = () => {
   return (
     <div>
-      < Header />
+      {/* < Header /> */}
       < Posts /> 
       < Footer />
    

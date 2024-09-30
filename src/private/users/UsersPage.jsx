@@ -1,68 +1,69 @@
-import React, { useRef } from 'react';
-import styles from './usersStyles.module.css';
-import useAuth from '../../hooks/useAuth';
-import { useState,useEffect } from 'react';
-import Table from 'react-bootstrap/Table';
+import React, { useState, useEffect } from 'react';
+import { Button, Table } from 'react-bootstrap';
+import Swal from 'sweetalert2'; // Asegúrate de importar Swal
+import { CiEdit } from 'react-icons/ci';
+import { MdOutlineDelete } from 'react-icons/md';
+import UserModal from './components/UserModal';
 import { Global } from '../../helpers/Global';
-import { Button } from 'react-bootstrap';
-import { CiEdit } from "react-icons/ci";
-import { MdOutlineDelete } from "react-icons/md";
-import UserEditModal from './components/UserEditModal';
 
-
-export const UsersPage = () => {
-
+const UsersPage = () => {
+  const [users, setUsers] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
+
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
+  const fetchUsers = async () => {
+    try {
+      const response = await fetch(`${Global.url}users`);
+      const data = await response.json();
+      setUsers(data);
+    } catch (error) {
+      console.error('Error al obtener los usuarios:', error);
+    }
+  };
 
   const handleEditClick = (user) => {
     setCurrentUser(user);
     setShowModal(true);
   };
 
-  const handleClose = () => setShowModal(false);
 
-  const handleSave = (updatedUser) => {
-    // Aquí puedes realizar la lógica para guardar los cambios (por ejemplo, llamar a una API)
-    console.log('Usuario actualizado:', updatedUser);
+  const handleClose = () => {
+    setShowModal(false);
+    setCurrentUser(null); // Limpia el usuario actual al cerrar
   };
 
+  const handleSave = async (userData) => {
+    const token = localStorage.getItem("token");
+    
+    if (!token) {
+      console.error('No hay token suministrado');
+      Swal.fire({
+        icon: 'error',
+        title: 'Error en la operación',
+        text: 'No estás autenticado. Por favor inicia sesión nuevamente.',
+      });
+      return; // Salir de la función si no hay token
+    }
 
-  // Variable para almacenar el token para las peticiones a realizar en este componente
-  const token = localStorage.getItem("token");
+  };
+  
+  
 
-  // Se recibe la información desde el Contexto a través del hook useAuth
-  const { auth } = useAuth();
-
-  // Estado para guardar el array de usuarios que sigues recibido desde el backend
-  const [users, setUsers] = useState([]);
-
-
-  // Usar desde el react-router-dom el Hook useParams para tener acceso a los parámetros que vienen en la url
-/*   const params = useParams(); */
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await fetch(Global.url + "users"); // Cambia la URL por la de tu API
-        const data = await response.json();
-        setUsers(data);
-      } catch (error) {
-        console.error('Error al obtener los usuarios:', error);
-      }
-    };
-
-    fetchUsers();
-  }, []);
-
-  /* Función para traducir rol */
   const roleTranslations = {
-    admin: "Administrador",
-    user: "Usuario",
+    admin: 'Administrador',
+    user: 'Usuario',
+    // Agrega otras traducciones de roles según sea necesario
   };
-
 
   return (
-    <>
+    <div className="container">
+      <div className="d-flex justify-content-between align-items-center mb-4">
+        <h1 className="mb-0">Usuarios del sistema</h1>
+      </div>
       <Table striped bordered hover variant="success">
         <thead>
           <tr>
@@ -75,17 +76,17 @@ export const UsersPage = () => {
         </thead>
         <tbody>
           {users.map((user, index) => (
-            <tr key={user?.id}>
+            <tr key={user?._id}> {/* Cambiado de user.id a user._id */}
               <td>{index + 1}</td>
               <td>{user.username}</td>
               <td>{user.email}</td>
               <td>{roleTranslations[user.role] || user.role}</td>
               <td>
                 <Button variant="info" className="me-2" onClick={() => handleEditClick(user)}>
-                  <CiEdit/>
+                  <CiEdit />
                 </Button>
-                <Button variant="danger" onClick={() => handleDelete(user.id)}>
-                  <MdOutlineDelete/>
+                <Button variant="danger" onClick={() => handleDelete(user._id)}> {/* Cambiado de user.id a user._id */}
+                  <MdOutlineDelete />
                 </Button>
               </td>
             </tr>
@@ -93,15 +94,13 @@ export const UsersPage = () => {
         </tbody>
       </Table>
 
-      {currentUser && (
-        <UserEditModal 
-          show={showModal} 
-          handleClose={handleClose} 
-          user={currentUser} 
-          handleSave={handleSave} 
-        />
-      )}
-    </>
+      <UserModal 
+        show={showModal} 
+        handleClose={handleClose} 
+        user={currentUser} 
+        handleSave={handleSave} 
+      />
+    </div>
   );
 };
 

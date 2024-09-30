@@ -7,23 +7,49 @@ import tortaGalletas from '../../assets/Products/tortaGalletas.jpg'
 import panChocolate from '../../assets/Products/panChocolate.jpg'
 import artesanal from '../../assets/Products/artesanal.jpg'
 import cookies from '../../assets/Products/cookies.png'
+import { useState, useEffect } from 'react';
+import { Global } from '../../helpers/Global';
+
+
+
 export const ProductsPage = () => {
 
-  /* Anexo de lógica para enviar a la sección espeifica  */
+  const [productos, setProductos] = useState([]);
+  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState(null);
 
+  useEffect(() => {
+    // Realiza la petición GET a tu API para obtener los productos
+    const fetchProductos = async () => {
+      try {
+        const response = await fetch(`${Global.url}products/products`); // Reemplaza con la URL de tu API
+        const data = await response.json();
+        if (data.status === "success") {
+          setProductos(data.data); // Asignar los productos desde la respuesta
+        } else {
+          console.error('Error en la respuesta:', data);
+        }      
+      } catch (error) {
+        console.error('Error al obtener los productos:', error);
+      }
+    };
+
+    fetchProductos();
+  }, []);
 
   const handleClick = (id) => {
     const seccion = document.getElementById(id);
     if (seccion) {
       seccion.scrollIntoView({ behavior: 'smooth' });
     }
+    setCategoriaSeleccionada(id); // Establece la categoría seleccionada
   };
+
 
 
   return (
     <div>
       <header className={styles.masthead}>
-        <div className="container px-4 px-lg-5">
+      <div className="container px-4 px-lg-5">
           <div className="row h-100 align-items-center">
             <div className="col-lg-6 text-center">
               <h1 className="text-uppercase text-light">DERILIUM</h1>
@@ -43,15 +69,8 @@ export const ProductsPage = () => {
         </div>
       </header>
 
-
       <div className="container text-center pt-5">
-        <div className={`mb-5 ${styles.inputBox_container}`}>
-          <svg className={styles.search_icon} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" alt="search icon">
-            <path d="M46.599 46.599a4.498 4.498 0 0 1-6.363 0l-7.941-7.941C29.028 40.749 25.167 42 21 42 9.402 42 0 32.598 0 21S9.402 0 21 0s21 9.402 21 21c0 4.167-1.251 8.028-3.342 11.295l7.941 7.941a4.498 4.498 0 0 1 0 6.363zM21 6C12.717 6 6 12.714 6 21s6.717 15 15 15c8.286 0 15-6.714 15-15S29.286 6 21 6z">
-            </path>
-          </svg>
-          <input className={styles.inputBox} id="inputBox" type="text" placeholder="Search For Products" />
-        </div>
+        {/* Botones para seleccionar categorías */}
         <Row className="justify-content-center">
           <Col xs={12} sm={6} md={4} lg={3} className="mb-4 d-flex justify-content-center"><Image src={torta} fluid className={styles.moveRay} rounded />
             <button className={`btn btn-success ${styles.overlayButton}`} onClick={() => handleClick('seccionTortas')} >Tortas</button>
@@ -68,97 +87,74 @@ export const ProductsPage = () => {
         </Row>
       </div>
 
+      {/* Sección de Tortas */}
       <div id="seccionTortas" className="container d-flex flex-column align-items-center text-center py-5">
         <h1>Tortas</h1>
         <hr className="hr" />
         <Container className="pt-5">
           <Row className="justify-content-center">
-            <Col xs={12} sm={6} md={4} lg={3} className="mb-4 d-flex justify-content-center">
-              <div className={styles.card}>
-                <Image src={torta} fluid rounded />
-                <div className={styles.card__content}>
-                  <h2 className={styles.card__title}>Title 1</h2>
-                  <p className={styles.card__description}>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ex maxime quisquam eius laboriosam temporibus mollitia, expedita ullam et! Alias aspernatur eaque cupiditate reiciendis quam deleniti quis maiores consequatur ad at. </p>
-                </div>
-              </div>
-            </Col>
-            <Col xs={12} sm={6} md={4} lg={3} className="mb-4 d-flex justify-content-center">
-              <div className={styles.card}>
-                <Image src={torta} fluid rounded />
-                <div className={styles.card__content}>
-                  <h2 className={styles.card__title}>Title 2</h2>
-                  <p className={styles.card__description}>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsum, praesentium ipsam iusto repellendus rem numquam. Sunt ipsum tenetur quibusdam eos aspernatur at provident vero officia error nesciunt, aliquid vel placeat?</p>
-                </div>
-              </div>
-            </Col>
-            <Col xs={12} sm={6} md={4} lg={3} className="mb-4 d-flex justify-content-center">
-              <div className={styles.card}>
-                <Image src={torta} fluid rounded />
-                <div className={styles.card__content}>
-                  <h2 className={styles.card__title}>Title 3</h2>
-                  <p className={styles.card__description}>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsum, praesentium ipsam iusto repellendus rem numquam. Sunt ipsum tenetur quibusdam eos aspernatur at provident vero officia error nesciunt, aliquid vel placeat?</p>
-                </div>
-              </div>
-            </Col>
-            <Col xs={12} sm={6} md={4} lg={3} className="mb-4 d-flex justify-content-center">
-              <div className={styles.card}>
-                <Image src={torta} fluid rounded />
-                <div className={styles.card__content}>
-                  <h2 className={styles.card__title}>Title 4</h2>
-                  <p className={styles.card__description}>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsum, praesentium ipsam iusto repellendus rem numquam. Sunt ipsum tenetur quibusdam eos aspernatur at provident vero officia error nesciunt, aliquid vel placeat?</p>
-                </div>
-              </div>
-            </Col>
+            {productos
+              .filter(producto => producto.category.name === 'reposteria') // Filtra los productos por categoría
+              .map((producto, index) => (
+                <Col key={index} xs={12} sm={6} md={4} lg={3} className="mb-4 d-flex justify-content-center">
+                  <div className={styles.card}>
+                  <Image src={torta} fluid rounded /> {/* Asegúrate de que tu API retorne la URL de la imagen */}
+                    <div className={styles.card__content}>
+                      <h2 className={styles.card__title}>{producto.name}</h2>
+                      <p className={styles.card__description}>{producto.description}</p>
+                    </div>
+                  </div>
+                </Col>
+              ))}
           </Row>
         </Container>
       </div>
 
+      {/* Sección de Panes Artesanales */}
       <div id="seccionPan" className="container d-flex flex-column align-items-center text-center py-5">
         <h1>Panes artesanales</h1>
         <hr className="hr" />
         <Container className="pt-5">
           <Row className="justify-content-center">
-            <Col xs={12} sm={6} md={4} lg={3} className="mb-4 d-flex justify-content-center">
-              <div className={styles.card}>
-                <Image src={artesanal} fluid rounded />
-                <div className={styles.card__content}>
-                  <h2 className={styles.card__title}>Title 1</h2>
-                  <p className={styles.card__description}>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ex maxime quisquam eius laboriosam temporibus mollitia, expedita ullam et! Alias aspernatur eaque cupiditate reiciendis quam deleniti quis maiores consequatur ad at. </p>
-                </div>
-              </div>
-            </Col>
-            <Col xs={12} sm={6} md={4} lg={3} className="mb-4 d-flex justify-content-center">
-              <div className={styles.card}>
-                <Image src={artesanal} fluid rounded />
-                <div className={styles.card__content}>
-                  <h2 className={styles.card__title}>Title 2</h2>
-                  <p className={styles.card__description}>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsum, praesentium ipsam iusto repellendus rem numquam. Sunt ipsum tenetur quibusdam eos aspernatur at provident vero officia error nesciunt, aliquid vel placeat?</p>
-                </div>
-              </div>
-            </Col>
-            <Col xs={12} sm={6} md={4} lg={3} className="mb-4 d-flex justify-content-center">
-              <div className={styles.card}>
-                <Image src={artesanal} fluid rounded />
-                <div className={styles.card__content}>
-                  <h2 className={styles.card__title}>Title 2</h2>
-                  <p className={styles.card__description}>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsum, praesentium ipsam iusto repellendus rem numquam. Sunt ipsum tenetur quibusdam eos aspernatur at provident vero officia error nesciunt, aliquid vel placeat?</p>
-                </div>
-              </div>
-            </Col>
-            <Col xs={12} sm={6} md={4} lg={3} className="mb-4 d-flex justify-content-center">
-              <div className={styles.card}>
-                <Image src={artesanal} fluid rounded />
-                <div className={styles.card__content}>
-                  <h2 className={styles.card__title}>Title 2</h2>
-                  <p className={styles.card__description}>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsum, praesentium ipsam iusto repellendus rem numquam. Sunt ipsum tenetur quibusdam eos aspernatur at provident vero officia error nesciunt, aliquid vel placeat?</p>
-                </div>
-              </div>
-            </Col>
+            {productos
+              .filter(producto => producto.category.name === 'panes artesanales') // Filtra los productos por categoría
+              .map((producto, index) => (
+                <Col key={index} xs={12} sm={6} md={4} lg={3} className="mb-4 d-flex justify-content-center">
+                  <div className={styles.card}>
+                  <Image src={panChocolate} fluid rounded />
+                    <div className={styles.card__content}>
+                    <h2 className={styles.card__title}>{producto.name}</h2>
+                    <p className={styles.card__description}>{producto.description}</p>
+                    </div>
+                  </div>
+                </Col>
+              ))}
           </Row>
         </Container>
       </div>
 
+      {/* Sección de Galletas */}
       <div id="seccionGalletas" className="container d-flex flex-column align-items-center text-center py-5">
+        <h1>Galletas</h1>
+        <hr className="hr" />
+        <Container className={styles.container}>
+          <Row className="justify-content-center">
+            {productos
+              .filter(producto => producto.category.name === 'galletas') // Filtra los productos por categoría
+              .map((producto, index) => (
+                <Col key={index} xs={12} sm={6} md={4} lg={3} className="mb-4 d-flex justify-content-center">
+                  <div className={styles.card}>
+                  <Image src={cookies} fluid rounded />
+                    <div className={styles.card__content}>
+                    <h2 className={styles.card__title}>{producto.name}</h2>
+                    <p className={styles.card__description}>{producto.description}</p>
+                    </div>
+                  </div>
+                </Col>
+              ))}
+          </Row>
+        </Container>
+
         <h1>Personaliza tus galletas</h1>
         <hr className="hr" />
 
@@ -215,8 +211,9 @@ export const ProductsPage = () => {
             </div>
           </form>
         </Container>
-      </div>
 
+
+      </div>
     </div>
-  )
-}
+  );
+};
