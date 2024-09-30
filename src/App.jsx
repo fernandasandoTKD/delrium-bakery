@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import './styles/custom.css'
 import './App.css'
-import { AppRouter } from './routing/AppRouter'
+import AppRouter from './routing/AppRouter'
 function App() {
   const [count, setCount] = useState(0)
 
