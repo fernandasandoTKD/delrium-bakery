@@ -3,6 +3,8 @@ import axios from 'axios';
 import styles from './ClassesPublicStyles.module.css';
 import img1 from './img1.jpg';
 import img2 from './img2.jpg';
+import { Global } from '../../../helpers/Global';
+
 
 export const CustomerView = () => {
   const [classes, setClasses] = useState([]); // Para almacenar las clases disponibles
@@ -14,7 +16,7 @@ export const CustomerView = () => {
   useEffect(() => {
     const fetchClasses = async () => {
       try {
-        const response = await axios.get('http://localhost:3900/api/classes');
+        const response = await axios.get(`${Global.url}classRoutes`);
         setClasses(response.data); // Almacena las clases recuperadas
       } catch (error) {
         console.error('Error al obtener clases:', error);

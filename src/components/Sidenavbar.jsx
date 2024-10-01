@@ -7,7 +7,8 @@ import logo from '../assets/logo.png';
 export const Sidenavbar = () => {
   const [show, setShow] = useState(true);
   const { auth, logout } = useAuth(); // Estado para controlar la visibilidad
-
+  console.log(auth);
+  
   const offcanvasRef = useRef(null);
 
   const closeOffcanvas = () => {
@@ -73,12 +74,31 @@ export const Sidenavbar = () => {
                     Usuarios
                   </NavLink>
                 </li>
+
+                <li className="nav-item">
+                  <NavLink
+                    className="nav-link"
+                    to="/private/products"
+                    activeClassName="active"
+                    onClick={closeOffcanvas} // Close on click
+                  >
+                    Productos
+                  </NavLink>
+                </li>
                 <li className="nav-item dropdown">
-                  <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <a className="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     Perfil
                   </a>
                   <ul className="dropdown-menu">
-                    <li><a className="dropdown-item" href="#">Detalle</a></li>
+                    <li>
+                    <NavLink
+                    className="dropdown-item"
+                    to={`/private/profile/${auth.id}`}
+                    activeClassName="active"
+                    onClick={closeOffcanvas} // Close on click
+                  >
+                    Detalle
+                  </NavLink></li>
                     <li><a className="dropdown-item" href="#" onClick={handleLogout}>Cerrar sesión</a></li>
                   </ul>
                 </li>
