@@ -18,6 +18,8 @@ import { BlogPage } from "../modules/blog/BlogPage";
 import { PostDetail } from "../modules/blog/sub_pages/PostDetail.jsx";
 import {EditPost} from "../modules/blog/sub_pages/EditPost.jsx"
 import {DeletePost} from "../modules/blog/sub_pages/DeletePost.jsx"
+import {CreatePost} from '../modules/blog/sub_pages/CreatePost.jsx'
+import {Authors} from '../modules/blog/sub_pages/Authors.jsx'
 import { PublicClassView } from "../modules/classes/public/PublicClassView";
 import ShoppingPage from "../modules/shopping/ShoppingPage";
 import { ProductsPrivatePage } from '../private/products/ProductsPrivatePage.jsx';
@@ -69,6 +71,7 @@ const MainContent = () => {
         <Route path="/shopping" element={<ShoppingPage />} />
         <Route path="/blog" element={<div className="content"><BlogPage /></div>} />
         <Route path='/posts/:id' element={<div className="content"><PostDetail /></div>} />
+        <Route path='/authors' element={<div className="content"><Authors /></div>} />
         <Route path='/classes' element={<div className="content"><PublicClassView /></div>} />
 
         {/* Ruta para la página privada */}
@@ -81,6 +84,7 @@ const MainContent = () => {
           <Route path='shopping' element={<PrivateRoute allowedRoles={['user']} element={<ShoppingPage />} />} />
           <Route path="posts/:id/edit" element={<PrivateRoute allowedRoles={['admin']} element={<EditPost />} />} />
           <Route path='posts/:id/delete' element={<PrivateRoute allowedRoles={['admin']} element={<DeletePost />} />} />
+          <Route path='posts/create' element={<PrivateRoute allowedRoles={['admin']} element={<CreatePost />} />} />
         </Route>
 
         <Route path="*" element={<Navigate to="/products" />} />
