@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 import axios from 'axios';
+import { Global } from '../../../helpers/Global';
+
 
 export const AdminView = () => {
   const [showModal, setShowModal] = useState(false);
@@ -19,7 +21,7 @@ export const AdminView = () => {
   // Función para cargar las clases desde el backend
   const fetchClasses = async () => {
     try {
-      const response = await axios.get('http://localhost:3900/api/classes');
+      const response = await axios.get(`${Global.url}classRoutes`);
       setClasses(response.data);
     } catch (error) {
       console.error('Error al obtener clases:', error);
@@ -35,7 +37,7 @@ export const AdminView = () => {
   // Agregar una nueva clase
   const handleAddNewClass = async () => {
     try {
-      const response = await axios.post('http://localhost:3900/api/classes', newClass);
+      const response = await axios.post((`${Global.url}classRoutes`), newClass);
       console.log('Clase agregada:', response.data);
       setShowModal(false);
       setNewClass({
