@@ -6,7 +6,7 @@ const PrivateRoute = ({ element, allowedRoles }) => {
     
     // Si no está autenticado, redirige al login
     if (!isAuthenticated) {
-        return <Navigate to="/login" />;
+        return <Navigate to="/products" />;
     } 
 
     // Si está autenticado pero no tiene el rol permitido, redirige a products

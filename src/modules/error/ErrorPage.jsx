@@ -3,7 +3,7 @@ import styles from './errorStyles.module.css'
 
 export const ErrorPage = () => {
   return (
-    <div>
+    <div className='container'>
         <div className={styles.face}>
 	<div className={styles.band}>
 		<div className={styles.red}></div>
@@ -19,3 +19,5 @@ export const ErrorPage = () => {
     </div>
   )
 }
+
+export default ErrorPage;

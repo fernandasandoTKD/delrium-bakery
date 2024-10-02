@@ -20,6 +20,8 @@ import { PublicClassView } from "../modules/classes/public/PublicClassView";
 import ShoppingPage from "../modules/shopping/ShoppingPage";
 import { ProductsPrivatePage } from '../private/products/ProductsPrivatePage.jsx';
 import { UsersDetail } from '../private/users/UsersDetail.jsx';
+import { Container } from 'react-bootstrap';
+import ErrorPage from '../modules/error/ErrorPage.jsx';
 
 
 const AppRouter = () => {
@@ -52,7 +54,7 @@ const MainContent = () => {
   }, []); // Dependencias vacías para que se ejecute solo una vez
 
   return (
-    <>
+    <Container fluid className="p-0">
       {isAuthenticated ? (
         <>
           {auth?.role === 'admin' ? <Sidenavbar /> : <NavbarPrivate />}
@@ -69,6 +71,8 @@ const MainContent = () => {
         <Route path='/posts/:id' element={<div className="content"><PostDetail /></div>} />
         <Route path='/classes' element={<div className="content"><PublicClassView /></div>} />
 
+       
+
         {/* Ruta para la página privada */}
         <Route path="/private" element={<PrivateRoute allowedRoles={['user', 'admin']} element={<PrivatePage />} />}>
           <Route path="pclasses" element={<PrivateRoute allowedRoles={['admin']} element={<AdminView />} />} />
@@ -79,11 +83,11 @@ const MainContent = () => {
           <Route path='shopping' element={<PrivateRoute allowedRoles={['user']} element={<ShoppingPage />} />} />
         </Route>
 
-        <Route path="*" element={<Navigate to="/products" />} />
+        <Route path="*" element={<ErrorPage />} />
       </Routes>
 
       <Footer />
-    </>
+    </Container>
   );
 };
 

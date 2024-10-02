@@ -85,6 +85,17 @@ export const Sidenavbar = () => {
                     Productos
                   </NavLink>
                 </li>
+                
+                <li className="nav-item">
+                  <NavLink
+                    className="nav-link"
+                    to="/private/blog"
+                    activeClassName="active"
+                    onClick={closeOffcanvas} // Close on click
+                  >
+                    Blog
+                  </NavLink>
+                </li>
                 <li className="nav-item dropdown">
                   <a className="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     Perfil
