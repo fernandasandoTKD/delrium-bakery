@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css'
-
+import { Global } from '../../../helpers/Global'
+import axios from 'axios'; // Importar Axios
 
 export const CreatePost = () => {
   
@@ -27,7 +28,7 @@ const POST_CATEGORIES = ["Nuestra Historia", "Panes del mundo", "Tortas Artesana
 const [formData, setFormData] = useState({
   title: '',
   category: '',
-  image: null,
+  thumbnail: null,
   description:''
 });
 
@@ -52,16 +53,39 @@ const handleImageChange = (e) => {
   const file = e.target.files[0];
   setFormData({
     ...formData,
-    image: file
+    thumbnail: file
   });
 
 
 };
 // Manejar el envío del formulario
-const handleSubmit = (e) => {
+const handleSubmit = async (e) => {
   e.preventDefault(); // Prevenir el comportamiento por defecto de recargar la página
   console.log('Datos enviados:', formData);
   // Aquí puedes enviar los datos a un servidor, o hacer cualquier otra acción
+
+   // Crear un objeto FormData para enviar la imagen
+   const formDataToSend = new FormData();
+   formDataToSend.append('title', formData.title);
+   formDataToSend.append('category', formData.category);
+   formDataToSend.append('thumbnail', formData.thumbnail);
+   formDataToSend.append('description', formData.description); // Añadir la imagen
+
+   const token = localStorage.getItem("token");
+  try{ 
+    const response = await axios.post(`${Global.url}post`,formDataToSend, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+      'Authorization': `Bearer ${token}`,
+    },
+   })
+   console.log('Respuesta del servidor:', response.data);
+
+  }catch(e) {
+    console.error('Error al enviar el formulario:', e);
+  }
+  
+
 };
   return (
     <section className="create-post">
@@ -95,8 +119,8 @@ const handleSubmit = (e) => {
         
         <input
           type="file"
-          id="image"
-          name="image"
+          id="thumbnail"
+          name="thumbnail"
           accept="image/*"
           onChange={handleImageChange}
         />
