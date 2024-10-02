@@ -48,7 +48,7 @@ export const PostDetail = () => {
           {postDetail && <PostAuthor authorID={postDetail.creator} updatedAt={postDetail?.updatedAt}/>}
             {(auth && auth.role == "admin") && 
               <div className="post-detail__buttons">
-              <NavLink to={`/private/posts/werwer/edit`} className='btn sm primary'> Edit</NavLink>
+              <NavLink to={`/private/posts/${id}/edit`} className='btn sm primary'> Edit</NavLink>
               <button className='btn sm danger' onClick={handleDelete}> Delete</button>
               </div> 
              
