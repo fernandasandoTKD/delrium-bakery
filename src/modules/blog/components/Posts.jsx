@@ -25,8 +25,9 @@ const Posts = () => {
     <section className="posts"> 
       {posts.length > 0 ? <div className="container posts_container">
         {
-            posts.map(({_id, thumbnail,category, title, description, authorID })=> <PostItem  key={_id} postID={_id} thumbnail={thumbnail} category= {category} title ={title} description={description} authorID={"authorID"} />)
+            posts.map(({_id, thumbnail,category, title, description, creator , updatedAt })=> <PostItem  key={_id} postID={_id} thumbnail={thumbnail} category= {category} title ={title} description={description} authorID={creator} updatedAt={updatedAt} />)
         }
+        
       </div> : <h2 className='center'> No posts founds </h2>}
     </section> 
     
