@@ -17,7 +17,7 @@ export const PostDetail = () => {
     const fetchPostDetail = async () => {
       try {
         const response = await axios.get(`${Global.url}post/${id}`);
-        console.log(response.data)
+        
         setPostDetail(response.data);
       } catch (error) {
         console.error('Error al obtener Posts:', error);
@@ -31,7 +31,7 @@ export const PostDetail = () => {
     <section className= "post-detail">
       <div className="container post-detail__container">
         <div className="post-detail__header">
-          <PostAuthor/>
+          <PostAuthor authorID={postDetail.creator} updatedAt={postDetail?.updatedAt}/>
             {(auth && auth.role == "admin") && 
               <div className="post-detail__buttons">
               <NavLink to={`/private/posts/werwer/edit`} className='btn sm primary'> Edit</NavLink>

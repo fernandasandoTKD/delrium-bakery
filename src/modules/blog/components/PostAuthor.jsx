@@ -12,7 +12,7 @@ const PostAuthor = ({authorID , updatedAt}) => {
     const fetchAuthor = async () => {
       try {
         const response = await axios.get(`${Global.url}users/${authorID}`);
-        console.log(response , "prueba")
+        
         setAuthor(response.data);
       } catch (error) {
         console.error('Error al obtener Posts:', error);
