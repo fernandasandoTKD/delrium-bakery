@@ -1,24 +1,48 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'; 
+import axios from 'axios';
 import styles from './ClassesPublicStyles.module.css';
 import img1 from './img1.jpg';
 import img2 from './img2.jpg';
+import { Global } from '../../../helpers/Global';
 
 export const PublicClassView = () => {
-  const [classes] = useState([
-    { id: 1, name: 'Panadería Básica', description: 'Aprende los fundamentos de la panadería', date: '2024-09-22', time: '10:00 AM', duration: 3, instructor: 'Juan Pérez' },
-    { id: 2, name: 'Pastelería Avanzada', description: 'Clases avanzadas de pastelería', date: '2024-09-23', time: '2:00 PM', duration: 4, instructor: 'María Gómez' },
-  ]);
+  const [classes, setClasses] = useState([]); // Para almacenar las clases disponibles
+  const [myClasses, setMyClasses] = useState(() => {
+    const storedClasses = localStorage.getItem('myClasses');
+    return storedClasses ? JSON.parse(storedClasses) : [];
+  });
 
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // Inicializar el hook de redirección
 
-
-    const handleSelectClass = () => {
-      navigate('/login');  // Redirige al login
+  useEffect(() => {
+    const fetchClasses = async () => {
+      try {
+        const response = await axios.get(`${Global.url}classRoutes`);
+        setClasses(response.data);
+      } catch (error) {
+        console.error('Error al obtener clases:', error);
+      }
     };
 
+    fetchClasses(); // Llamar a la función para obtener las clases al montar el componente
+  }, []);
 
-  const classImages = [img1, img2];  // Asigna las imágenes
+  // Adición de clases
+  const handleAddClass = (classItem) => {
+    const isLoggedIn = false; 
+
+    if (!isLoggedIn) {
+      navigate('/login'); // Redirige a la página de inicio de sesión
+    } else {
+      // Si está logueado, agregar la clase
+      if (!myClasses.find((cls) => cls.id === classItem.id)) {
+        const updatedClasses = [...myClasses, classItem];
+        setMyClasses(updatedClasses);
+        localStorage.setItem('myClasses', JSON.stringify(updatedClasses)); // Almacena en localStorage
+      }
+    }
+  };
 
   return (
     <div className="container mt-4">
@@ -26,9 +50,9 @@ export const PublicClassView = () => {
       <div className={`container row ${styles.Container}`}>
         {classes.length > 0 ? (
           classes.map((classItem, index) => (
-            <div className={`col-md-4 ${styles.cardContainer}`} key={classItem.id}>
+            <div className={`col-md-4 ${styles.cardContainer}`} key={classItem._id}>
               <div className={`${styles.card} ${index === 0 ? styles.cardLeft : styles.cardRight}`}>
-                <div className={styles.card_landing} style={{ '--i': `url(${classImages[index]})` }}>
+                <div className={styles.card_landing} style={{ '--i': `url(${index === 0 ? img1 : img2})` }}>
                   <h6>{classItem.name}</h6>
                 </div>
                 <div className={styles.card_info}>
@@ -52,8 +76,8 @@ export const PublicClassView = () => {
                   </div>
 
                   <div className={styles.action}>
-                    <button className="btn btn-primary" onClick={handleSelectClass}>
-                      Seleccionar Clase
+                    <button className="btn btn-primary" onClick={() => handleAddClass(classItem)}>
+                      Agregar a mis cursos
                     </button>
                   </div>
                 </div>

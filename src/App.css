@@ -8,10 +8,14 @@ body {
   background-color: rgb(227, 219, 219);
   color: black;
   font-family: Arial, sans-serif;
+  overflow-x: hidden; 
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .content{
-  min-height: 80vh;
+  min-height: 100vh;
   justify-content: center;
   align-items: center;
 }

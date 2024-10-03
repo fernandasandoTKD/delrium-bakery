@@ -1,36 +1,46 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import styles from './ClassesPublicStyles.module.css';
 import img1 from './img1.jpg';
 import img2 from './img2.jpg';
+import { Global } from '../../../helpers/Global';
+
 
 export const CustomerView = () => {
-  const [classes] = useState([
-    { id: 1, name: 'Panadería Básica', description: 'Aprende los fundamentos de la panadería', date: '2024-09-22', time: '10:00 AM', duration: 3, instructor: 'Juan Pérez' },
-    { id: 2, name: 'Pastelería Avanzada', description: 'Clases avanzadas de pastelería', date: '2024-09-23', time: '2:00 PM', duration: 4, instructor: 'María Gómez' },
-  ]);
-
-  // Cargar clases desde localStorage
+  const [classes, setClasses] = useState([]); // Para almacenar las clases disponibles
   const [myClasses, setMyClasses] = useState(() => {
     const storedClasses = localStorage.getItem('myClasses');
     return storedClasses ? JSON.parse(storedClasses) : [];
   });
 
-  // Guardar las clases en localStorage cuando se agregan o eliminan
   useEffect(() => {
-    localStorage.setItem('myClasses', JSON.stringify(myClasses));
-  }, [myClasses]);
+    const fetchClasses = async () => {
+      try {
+        const response = await axios.get(`${Global.url}classRoutes`);
+        setClasses(response.data); // Almacena las clases recuperadas
+      } catch (error) {
+        console.error('Error al obtener clases:', error);
+      }
+    };
 
+    fetchClasses(); // Llamar a la función para obtener las clases al montar el componente
+  }, []);
+
+  // Guardar en localStorage cuando se agrega una clase
   const handleAddClass = (classItem) => {
-    if (!myClasses.find((cls) => cls.id === classItem.id)) {
-      setMyClasses([...myClasses, classItem]);
+    // Verificar si la clase ya está en la lista
+    if (!myClasses.find((cls) => cls._id === classItem._id)) {
+      const updatedClasses = [...myClasses, classItem]; // Agregar clase
+      setMyClasses(updatedClasses); // Actualizar el estado
+      localStorage.setItem('myClasses', JSON.stringify(updatedClasses)); // Almacenar en localStorage
     }
   };
 
   const handleRemoveClass = (id) => {
-    setMyClasses(myClasses.filter((classItem) => classItem.id !== id));
+    const updatedMyClasses = myClasses.filter((classItem) => classItem._id !== id); // Filtrar clase a eliminar
+    setMyClasses(updatedMyClasses); // Actualizar el estado
+    localStorage.setItem('myClasses', JSON.stringify(updatedMyClasses)); // Actualizar localStorage
   };
-
-  const classImages = [img1, img2];
 
   return (
     <div className="container mt-4">
@@ -38,9 +48,9 @@ export const CustomerView = () => {
       <div className={`container row ${styles.Container}`}>
         {classes.length > 0 ? (
           classes.map((classItem, index) => (
-            <div className={`col-md-4 ${styles.cardContainer}`} key={classItem.id}>
+            <div className={`col-md-4 ${styles.cardContainer}`} key={classItem._id}>
               <div className={`${styles.card} ${index === 0 ? styles.cardLeft : styles.cardRight}`}>
-                <div className={styles.card_landing} style={{ '--i': `url(${classImages[index]})` }}>
+                <div className={styles.card_landing} style={{ '--i': `url(${index === 0 ? img1 : img2})` }}>
                   <h6>{classItem.name}</h6>
                 </div>
                 <div className={styles.card_info}>
@@ -83,9 +93,9 @@ export const CustomerView = () => {
           <h2>Mis Cursos</h2>
           <ul className="list-group">
             {myClasses.map((classItem) => (
-              <li className="list-group-item d-flex justify-content-between align-items-center" key={classItem.id}>
+              <li className="list-group-item d-flex justify-content-between align-items-center" key={classItem._id}>
                 {classItem.name}
-                <button className="btn btn-danger btn-sm" onClick={() => handleRemoveClass(classItem.id)}>
+                <button className="btn btn-danger btn-sm" onClick={() => handleRemoveClass(classItem._id)}>
                   Eliminar
                 </button>
               </li>

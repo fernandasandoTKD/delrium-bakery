@@ -1,13 +1,14 @@
 import React, { useState } from 'react'
 import {Link} from "react-router-dom"
 import Logo from '../../../assets/logo.png'
-import  {FaBars} from "react-icons/fa"
+
+import { IoCreateOutline } from "react-icons/io5"
 import {AiOutlineClose} from "react-icons/ai"
-
-
+import { NavLink } from 'react-router-dom';
+import useAuth from '../../../hooks/useAuth';
 
 const Header = () => {
-  
+  const { auth, logout } = useAuth();
   const [isNavshowing, setIsNavShowing] = useState (window.innerWidth > 800 ? true : false);
   
   const closeNavHandler = () => {
@@ -24,16 +25,19 @@ const Header = () => {
     
     <nav>
       <div className="container nav__container">
-      {isNavshowing && <ul className="nav__menu">
-          <li> <Link to= "/profile/sdfsdf" onClick={closeNavHandler}> Profile </Link></li>
-          <li> <Link to= "/create" onClick={closeNavHandler}> Create Post </Link></li>
-          <li> <Link to= "/authors" onClick={closeNavHandler}> Authors </Link></li>
-          <li> <Link to= "/logout" onClick={closeNavHandler}> Logout </Link></li>
+      
+      { 
+        auth && auth.role == "admin" && isNavshowing && <ul className="nav__menu" >
+         
+         
+          <li> <NavLink to= "/private/posts/create" onClick={closeNavHandler} className="btn category"> Create Post </NavLink></li>
+        
+          
           
         </ul>}
 
         <button className='nav__toggle-btn' onClick={()=> setIsNavShowing(!isNavshowing)}>
-          {isNavshowing ? <AiOutlineClose /> : <FaBars />}
+          {isNavshowing ? <AiOutlineClose /> : <IoCreateOutline />}
         </button>
       </div>
     </nav>

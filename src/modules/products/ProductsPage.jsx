@@ -5,52 +5,90 @@ import torta from '../../assets/Products/torta.jpg'
 import tortaGalletas from '../../assets/Products/tortaGalletas.jpg'
 import panChocolate from '../../assets/Products/panChocolate.jpg'
 import artesanal from '../../assets/Products/artesanal.jpg'
-import cookies from '../../assets/Products/cookies.png'
+import cookies from '../../assets/Products/cookies.jpg'
+import { useState, useEffect } from 'react';
+import { Global } from '../../helpers/Global';
+import { useNavigate } from 'react-router-dom';
+import pan from '../../assets/Products/pan.jpg'
+import tortaRender from '../../assets/Products/tortaRender.jpg'
+import Swal from 'sweetalert2';
+
+
+
+
 export const ProductsPage = () => {
 
-  /* Anexo de lógica para enviar a la sección espeifica  */
+  const [productos, setProductos] = useState([]);
+  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState(null);
+  const navigate = useNavigate();
 
+  const handleRedirect = () => {
+    navigate('/classes');
+  };
+
+  const handleRedirectBuyHere = () => {
+    navigate('/shopping');
+  };
+
+  useEffect(() => {
+    // Realiza la petición GET a tu API para obtener los productos
+    const fetchProductos = async () => {
+      try {
+        const response = await fetch(`${Global.url}products/products`); // Reemplaza con la URL de tu API
+        const data = await response.json();
+        if (data.status === "success") {
+          setProductos(data.data); // Asignar los productos desde la respuesta
+        } else {
+          console.error('Error en la respuesta:', data);
+        }      
+      } catch (error) {
+        console.error('Error al obtener los productos:', error);
+      }
+    };
+
+    fetchProductos();
+  }, []);
 
   const handleClick = (id) => {
     const seccion = document.getElementById(id);
     if (seccion) {
       seccion.scrollIntoView({ behavior: 'smooth' });
     }
+    setCategoriaSeleccionada(id); // Establece la categoría seleccionada
   };
+
+  const handlePersonalizarClick = () => {
+    Swal.fire({
+      title: 'Lo sentimos',
+      text: 'Tenemos muchos pedidos en este momento. Gestiona el tuyo por WhatsApp.',
+      icon: 'info',
+      showCancelButton: true,
+      confirmButtonText: '<a href="https://api.whatsapp.com/send?phone=%2B573214059115&app=facebook&entry_point=page_cta&fbclid=IwY2xjawFq67JleHRuA2FlbQIxMAABHdlbR4R1Na2ekucdkEHknrZaD__u0YuBLL1Pr8Gx3JKpkjcUlO6dBJzDvw_aem_Y1phSEw5nSNymZMeziOZ_w" target="_blank" style="color:white; text-decoration:none;"><i class="fab fa-whatsapp"></i> Ir a WhatsApp</a>',
+      cancelButtonText: 'Cancelar',
+      cancelButtonColor: '#d33',
+      confirmButtonColor: '#25D366', // Color del botón de WhatsApp
+    });
+  };
+
 
 
   return (
     <div>
       <header className={styles.masthead}>
-        <div className="container px-4 px-lg-5">
+      <div className="container px-4 px-lg-5">
           <div className="row h-100 align-items-center">
             <div className="col-lg-6 text-center">
-              <h1 className="text-uppercase text-light">DERILIUM</h1>
-              <h2 className="text-white-50 mt-2 mb-5">Tradición artesanal en productos de panadería y respostería.</h2>
-              <a className="btn btn-primary" href="#about">Compra acá</a>
+              <h1 className="text-uppercase text-light">DELIRIUM BAKERY</h1>
+              <h2 className="text-white-50 mt-2 mb-5">Tradición artesanal en productos de panadería y pastelería.</h2>
+              <a className="btn btn-primary" onClick={handleRedirectBuyHere} >Compra acá</a>
             </div>
-            <div className="col-lg-4 d-flex justify-content-end">
-              <img
-                src={logo}
-                width="200"
-                height="auto"
-                alt="Logo"
-                className="img-fluid"
-              />
-            </div>
+            
           </div>
         </div>
       </header>
 
-
       <div className="container text-center pt-5">
-        <div className={`mb-5 ${styles.inputBox_container}`}>
-          <svg className={styles.search_icon} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" alt="search icon">
-            <path d="M46.599 46.599a4.498 4.498 0 0 1-6.363 0l-7.941-7.941C29.028 40.749 25.167 42 21 42 9.402 42 0 32.598 0 21S9.402 0 21 0s21 9.402 21 21c0 4.167-1.251 8.028-3.342 11.295l7.941 7.941a4.498 4.498 0 0 1 0 6.363zM21 6C12.717 6 6 12.714 6 21s6.717 15 15 15c8.286 0 15-6.714 15-15S29.286 6 21 6z">
-            </path>
-          </svg>
-          <input className={styles.inputBox} id="inputBox" type="text" placeholder="Search For Products" />
-        </div>
+        {/* Botones para seleccionar categorías */}
         <Row className="justify-content-center">
           <Col xs={12} sm={6} md={4} lg={3} className="mb-4 d-flex justify-content-center"><Image src={torta} fluid className={styles.moveRay} rounded />
             <button className={`btn btn-success ${styles.overlayButton}`} onClick={() => handleClick('seccionTortas')} >Tortas</button>
@@ -62,102 +100,79 @@ export const ProductsPage = () => {
             <button className={`btn btn-success ${styles.overlayButton}`} onClick={() => handleClick('seccionGalletas')}>Galletas</button>
           </Col>
           <Col xs={12} sm={6} md={4} lg={3} className="mb-4 d-flex justify-content-center"><Image src={panChocolate} fluid className={styles.moveRay} rounded />
-            <button className={`btn btn-primary ${styles.overlayButton}`} >Talleres</button>
+            <button className={`btn btn-primary ${styles.overlayButton}`} onClick={handleRedirect} >Talleres</button>
           </Col>
         </Row>
       </div>
 
+      {/* Sección de Tortas */}
       <div id="seccionTortas" className="container d-flex flex-column align-items-center text-center py-5">
         <h1>Tortas</h1>
         <hr className="hr" />
         <Container className="pt-5">
           <Row className="justify-content-center">
-            <Col xs={12} sm={6} md={4} lg={3} className="mb-4 d-flex justify-content-center">
-              <div className={styles.card}>
-                <Image src={torta} fluid rounded />
-                <div className={styles.card__content}>
-                  <h2 className={styles.card__title}>Title 1</h2>
-                  <p className={styles.card__description}>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ex maxime quisquam eius laboriosam temporibus mollitia, expedita ullam et! Alias aspernatur eaque cupiditate reiciendis quam deleniti quis maiores consequatur ad at. </p>
-                </div>
-              </div>
-            </Col>
-            <Col xs={12} sm={6} md={4} lg={3} className="mb-4 d-flex justify-content-center">
-              <div className={styles.card}>
-                <Image src={torta} fluid rounded />
-                <div className={styles.card__content}>
-                  <h2 className={styles.card__title}>Title 2</h2>
-                  <p className={styles.card__description}>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsum, praesentium ipsam iusto repellendus rem numquam. Sunt ipsum tenetur quibusdam eos aspernatur at provident vero officia error nesciunt, aliquid vel placeat?</p>
-                </div>
-              </div>
-            </Col>
-            <Col xs={12} sm={6} md={4} lg={3} className="mb-4 d-flex justify-content-center">
-              <div className={styles.card}>
-                <Image src={torta} fluid rounded />
-                <div className={styles.card__content}>
-                  <h2 className={styles.card__title}>Title 3</h2>
-                  <p className={styles.card__description}>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsum, praesentium ipsam iusto repellendus rem numquam. Sunt ipsum tenetur quibusdam eos aspernatur at provident vero officia error nesciunt, aliquid vel placeat?</p>
-                </div>
-              </div>
-            </Col>
-            <Col xs={12} sm={6} md={4} lg={3} className="mb-4 d-flex justify-content-center">
-              <div className={styles.card}>
-                <Image src={torta} fluid rounded />
-                <div className={styles.card__content}>
-                  <h2 className={styles.card__title}>Title 4</h2>
-                  <p className={styles.card__description}>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsum, praesentium ipsam iusto repellendus rem numquam. Sunt ipsum tenetur quibusdam eos aspernatur at provident vero officia error nesciunt, aliquid vel placeat?</p>
-                </div>
-              </div>
-            </Col>
+            {productos
+              .filter(producto => producto?.category?.name === 'reposteria') // Filtra los productos por categoría
+              .map((producto, index) => (
+                <Col key={index} xs={12} sm={6} md={4} lg={3} className="mb-4 d-flex justify-content-center">
+                  <div className={styles.card}>
+                  <Image src={tortaRender} fluid rounded /> {/* Asegúrate de que tu API retorne la URL de la imagen */}
+                    <div className={styles.card__content}>
+                      <h2 className={styles.card__title}>{producto.name}</h2>
+                      <p className={styles.card__description}>{producto.description}</p>
+                    </div>
+                  </div>
+                </Col>
+              ))}
           </Row>
         </Container>
       </div>
 
+      {/* Sección de Panes Artesanales */}
       <div id="seccionPan" className="container d-flex flex-column align-items-center text-center py-5">
         <h1>Panes artesanales</h1>
         <hr className="hr" />
         <Container className="pt-5">
           <Row className="justify-content-center">
-            <Col xs={12} sm={6} md={4} lg={3} className="mb-4 d-flex justify-content-center">
-              <div className={styles.card}>
-                <Image src={artesanal} fluid rounded />
-                <div className={styles.card__content}>
-                  <h2 className={styles.card__title}>Title 1</h2>
-                  <p className={styles.card__description}>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ex maxime quisquam eius laboriosam temporibus mollitia, expedita ullam et! Alias aspernatur eaque cupiditate reiciendis quam deleniti quis maiores consequatur ad at. </p>
-                </div>
-              </div>
-            </Col>
-            <Col xs={12} sm={6} md={4} lg={3} className="mb-4 d-flex justify-content-center">
-              <div className={styles.card}>
-                <Image src={artesanal} fluid rounded />
-                <div className={styles.card__content}>
-                  <h2 className={styles.card__title}>Title 2</h2>
-                  <p className={styles.card__description}>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsum, praesentium ipsam iusto repellendus rem numquam. Sunt ipsum tenetur quibusdam eos aspernatur at provident vero officia error nesciunt, aliquid vel placeat?</p>
-                </div>
-              </div>
-            </Col>
-            <Col xs={12} sm={6} md={4} lg={3} className="mb-4 d-flex justify-content-center">
-              <div className={styles.card}>
-                <Image src={artesanal} fluid rounded />
-                <div className={styles.card__content}>
-                  <h2 className={styles.card__title}>Title 2</h2>
-                  <p className={styles.card__description}>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsum, praesentium ipsam iusto repellendus rem numquam. Sunt ipsum tenetur quibusdam eos aspernatur at provident vero officia error nesciunt, aliquid vel placeat?</p>
-                </div>
-              </div>
-            </Col>
-            <Col xs={12} sm={6} md={4} lg={3} className="mb-4 d-flex justify-content-center">
-              <div className={styles.card}>
-                <Image src={artesanal} fluid rounded />
-                <div className={styles.card__content}>
-                  <h2 className={styles.card__title}>Title 2</h2>
-                  <p className={styles.card__description}>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsum, praesentium ipsam iusto repellendus rem numquam. Sunt ipsum tenetur quibusdam eos aspernatur at provident vero officia error nesciunt, aliquid vel placeat?</p>
-                </div>
-              </div>
-            </Col>
+            {productos
+              .filter(producto => producto?.category?.name === 'panes artesanales') // Filtra los productos por categoría
+              .map((producto, index) => (
+                <Col key={index} xs={12} sm={6} md={4} lg={3} className="mb-4 d-flex justify-content-center">
+                  <div className={styles.card}>
+                  <Image src={pan} fluid rounded />
+                    <div className={styles.card__content}>
+                    <h2 className={styles.card__title}>{producto.name}</h2>
+                    <p className={styles.card__description}>{producto.description}</p>
+                    </div>
+                  </div>
+                </Col>
+              ))}
           </Row>
         </Container>
       </div>
 
+      {/* Sección de Galletas */}
       <div id="seccionGalletas" className="container d-flex flex-column align-items-center text-center py-5">
+        <h1>Galletas</h1>
+        <hr className="hr" />
+        <Container className={styles.container}>
+          <Row className="justify-content-center">
+            {productos
+              .filter(producto => producto?.category?.name === 'galletas') // Filtra los productos por categoría
+              .map((producto, index) => (
+                <Col key={index} xs={12} sm={6} md={4} lg={3} className="mb-4 d-flex justify-content-center">
+                  <div className={styles.card}>
+                  <Image src={cookies} fluid rounded />
+                    <div className={styles.card__content}>
+                    <h2 className={styles.card__title}>{producto.name}</h2>
+                    <p className={styles.card__description}>{producto.description}</p>
+                    </div>
+                  </div>
+                </Col>
+              ))}
+          </Row>
+        </Container>
+
         <h1>Personaliza tus galletas</h1>
         <hr className="hr" />
 
@@ -169,12 +184,28 @@ export const ProductsPage = () => {
                 <h4>Categorías</h4>
                 <label>
                   <input type="radio" name="categoria" />
-                  <span>Opción 1</span>
+                  <span>Hallowen</span>
                 </label>
                 <br />
                 <label>
                   <input type="radio" name="categoria" />
-                  <span>Opción 2</span>
+                  <span>Amor y amistad</span>
+                </label>
+                <br />
+                <label>
+                  <input type="radio" name="categoria" />
+                  <span>Empresariales</span>
+                </label>
+                <br />
+                <label>
+                  <input type="radio" name="categoria" />
+                  <span>Baby shower</span>
+                </label>
+
+                <br />
+                <label>
+                  <input type="radio" name="categoria" />
+                  <span>Cumpleaños</span>
                 </label>
               </div>
 
@@ -183,12 +214,27 @@ export const ProductsPage = () => {
                 <h4>Glaseados</h4>
                 <label>
                   <input type="radio" name="glaseado" />
-                  <span>Glaseado 1</span>
+                  <span>Real</span>
                 </label>
                 <br />
                 <label>
                   <input type="radio" name="glaseado" />
-                  <span>Glaseado 2</span>
+                  <span>Azucarado</span>
+                </label>
+                <br />
+                <label>
+                  <input type="radio" name="glaseado" />
+                  <span>Manquequilla</span>
+                </label>
+                <br />
+                <label>
+                  <input type="radio" name="glaseado" />
+                  <span>Chococlate</span>
+                </label>
+                <br />
+                <label>
+                  <input type="radio" name="glaseado" />
+                  <span>Espejo</span>
                 </label>
               </div>
 
@@ -197,25 +243,42 @@ export const ProductsPage = () => {
                 <h4>Tipo de Galleta</h4>
                 <label>
                   <input type="radio" name="tipoGalleta" />
-                  <span>Galleta 1</span>
+                  <span>Mantequilla</span>
                 </label>
                 <br />
                 <label>
                   <input type="radio" name="tipoGalleta" />
-                  <span>Galleta 2</span>
+                  <span>Macarons</span>
+                </label>
+                <br />
+                <label>
+                  <input type="radio" name="tipoGalleta" />
+                  <span>Avena y pasas</span>
+                </label>
+                <br />
+                <label>
+                  <input type="radio" name="tipoGalleta" />
+                  <span>Almendra</span>
+                </label>
+                <br />
+                <label>
+                  <input type="radio" name="tipoGalleta" />
+                  <span>Jengibre</span>
                 </label>
               </div>
+              
             </div>
             {/* Botón Personalizar */}
             <div className="d-flex justify-content-center mt-4">
-              <button type="submit" className="btn btn-success btn-lg">
+              <button type="button" className="btn btn-success btn-lg" onClick={handlePersonalizarClick}>
                 Personalizar
               </button>
             </div>
           </form>
         </Container>
-      </div>
 
+
+      </div>
     </div>
-  )
-}
+  );
+};
