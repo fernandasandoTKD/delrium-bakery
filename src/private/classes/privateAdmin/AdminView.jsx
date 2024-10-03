@@ -72,7 +72,7 @@ export const AdminView = () => {
   // Eliminar clase
   const handleDeleteClass = async (id) => {
     try {
-      await axios.delete(`http://localhost:3900/api/classes/${id}`);
+      await axios.delete((`${Global.url}classRoutes/${id}`));
       fetchClasses(); // Recargar las clases después de eliminar
     } catch (error) {
       console.error('Error al eliminar clase:', error);

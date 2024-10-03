@@ -4,8 +4,6 @@ import Posts from './components/Posts'
 import Footer from './components/Footer'
 
 
-
-
 export const BlogPage = () => {
   return (
     <div>
