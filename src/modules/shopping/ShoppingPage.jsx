@@ -10,7 +10,7 @@ const ShoppingPage = () => {
     // Función para obtener productos desde el backend
     const fetchProducts = async () => {
       try {
-        const response = await axios.get('http://localhost:3900/api/products');  // Cambia la URL si es necesario
+        const response = await axios.get('http://localhost:3900/api/products/products');  // Cambia la URL si es necesario
         setProducts(response.data.data);  // Ajusta el formato según la estructura de respuesta del backend
       } catch (error) {
         console.error('Error al obtener productos:', error);
@@ -20,10 +20,16 @@ const ShoppingPage = () => {
     fetchProducts();
   }, []);  // El useEffect se ejecuta solo una vez al montar el componente
 
-  const handleDelete = (id) => {
-    setProducts(products.filter(product => product.id !== id));
+  const handleDelete = async (productId) => {
+    try {
+      const response = await axios.delete(`http://localhost:3900/api/cart`, {
+        data: { productId }
+      });
+      console.log('Producto eliminado:', response.data);
+    } catch (error) {
+      console.error('Error al eliminar producto:', error);
+    }
   };
-
   
   return (
     <div className="container-fluid shopping">

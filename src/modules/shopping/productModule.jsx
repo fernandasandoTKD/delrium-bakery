@@ -1,3 +1,4 @@
+import React from 'react';
 import PropTypes from 'prop-types';
 
 const ProductCard = ({ product }) => {
@@ -14,12 +15,12 @@ const ProductCard = ({ product }) => {
   );
 };
 
+// Definición de propTypes
 ProductCard.propTypes = {
   product: PropTypes.shape({
-    _id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
-    description: PropTypes.string.isRequired,
+    description: PropTypes.string,
     image: PropTypes.string.isRequired,
   }).isRequired,
 };
