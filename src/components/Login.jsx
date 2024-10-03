@@ -14,17 +14,6 @@ export const Login = () => {
     const [isRegister, setIsRegister] = useState(false);
     const navigate = useNavigate();
 
-/*       // Usar useEffect para redirigir si ya hay un token en localStorage
-      useEffect(() => {
-        const token = localStorage.getItem('token');
-        const user = localStorage.getItem('user');
-    
-        if (token && user) {
-          const userData = JSON.parse(user);
-          setAuth(userData);
-          navigate(userData.role === 'admin' ? '/private/pclasses' : '/private/uclasses');
-        }
-      }, [navigate, setAuth]); */
 
 
     const loginUser = async (e) => {
@@ -74,7 +63,8 @@ export const Login = () => {
     };
 
     return (
-        <div className={styles.container} ref={containerRef}>
+       <div className="container-main">
+         <div className={styles.container} ref={containerRef}>
             {/* Formulario de Inicio de Sesión */}
             {!isRegister && (
                 <div className={`${styles.formContainer} ${styles.signIn}`}>
@@ -141,5 +131,6 @@ export const Login = () => {
                 </div>
             </div>
         </div>
+       </div>
     );
 };

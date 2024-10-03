@@ -9,6 +9,8 @@ import artesanal from '../../assets/Products/artesanal.jpg'
 import cookies from '../../assets/Products/cookies.png'
 import { useState, useEffect } from 'react';
 import { Global } from '../../helpers/Global';
+import { useNavigate } from 'react-router-dom';
+
 
 
 
@@ -16,6 +18,15 @@ export const ProductsPage = () => {
 
   const [productos, setProductos] = useState([]);
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState(null);
+  const navigate = useNavigate();
+
+  const handleRedirect = () => {
+    navigate('/classes');
+  };
+
+  const handleRedirectBuyHere = () => {
+    navigate('/shopping');
+  };
 
   useEffect(() => {
     // Realiza la petición GET a tu API para obtener los productos
@@ -54,7 +65,7 @@ export const ProductsPage = () => {
             <div className="col-lg-6 text-center">
               <h1 className="text-uppercase text-light">DERILIUM</h1>
               <h2 className="text-white-50 mt-2 mb-5">Tradición artesanal en productos de panadería y respostería.</h2>
-              <a className="btn btn-primary" href="#about">Compra acá</a>
+              <a className="btn btn-primary" onClick={handleRedirectBuyHere} >Compra acá</a>
             </div>
             <div className="col-lg-4 d-flex justify-content-end">
               <img
@@ -82,7 +93,7 @@ export const ProductsPage = () => {
             <button className={`btn btn-success ${styles.overlayButton}`} onClick={() => handleClick('seccionGalletas')}>Galletas</button>
           </Col>
           <Col xs={12} sm={6} md={4} lg={3} className="mb-4 d-flex justify-content-center"><Image src={panChocolate} fluid className={styles.moveRay} rounded />
-            <button className={`btn btn-primary ${styles.overlayButton}`} >Talleres</button>
+            <button className={`btn btn-primary ${styles.overlayButton}`} onClick={handleRedirect} >Talleres</button>
           </Col>
         </Row>
       </div>
@@ -94,7 +105,7 @@ export const ProductsPage = () => {
         <Container className="pt-5">
           <Row className="justify-content-center">
             {productos
-              .filter(producto => producto.category.name === 'reposteria') // Filtra los productos por categoría
+              .filter(producto => producto.category?.name === 'reposteria') // Filtra los productos por categoría
               .map((producto, index) => (
                 <Col key={index} xs={12} sm={6} md={4} lg={3} className="mb-4 d-flex justify-content-center">
                   <div className={styles.card}>
@@ -117,7 +128,7 @@ export const ProductsPage = () => {
         <Container className="pt-5">
           <Row className="justify-content-center">
             {productos
-              .filter(producto => producto.category.name === 'panes artesanales') // Filtra los productos por categoría
+              .filter(producto => producto.category?.name === 'panes artesanales') // Filtra los productos por categoría
               .map((producto, index) => (
                 <Col key={index} xs={12} sm={6} md={4} lg={3} className="mb-4 d-flex justify-content-center">
                   <div className={styles.card}>
@@ -140,7 +151,7 @@ export const ProductsPage = () => {
         <Container className={styles.container}>
           <Row className="justify-content-center">
             {productos
-              .filter(producto => producto.category.name === 'galletas') // Filtra los productos por categoría
+              .filter(producto => producto.category?.name === 'galletas') // Filtra los productos por categoría
               .map((producto, index) => (
                 <Col key={index} xs={12} sm={6} md={4} lg={3} className="mb-4 d-flex justify-content-center">
                   <div className={styles.card}>

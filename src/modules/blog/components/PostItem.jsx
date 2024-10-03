@@ -1,11 +1,18 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import PostAuthor from '../components/PostAuthor'
+
 import "../css/stylesblog.css"
+import { Global } from '../../../helpers/Global'
 
 const PostItem = ({postID, category, title, description, authorID, thumbnail , updatedAt}) => {
     const shortDescription = description.length > 145 ? description.substr (0, 145) + '...' : description;
     const postTitle = title.length > 30 ? title.substr (0, 30) + '...' : title;
+
+    const imageUrl = `${Global.url}uploads/${thumbnail}`;
+    console.log('Image URL:', imageUrl); // Verifica esta URL
+
+
   return (
     <article className="post">
         <div className='post__thumbnail'>

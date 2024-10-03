@@ -58,7 +58,7 @@ const MainContent = () => {
   }, []); // Dependencias vacías para que se ejecute solo una vez
 
   return (
-    <Container fluid className="p-0">
+    <Container fluid className="p-0 container-main">
       {isAuthenticated ? (
         <>
           {auth?.role === 'admin' ? <Sidenavbar /> : <NavbarPrivate />}
@@ -68,9 +68,9 @@ const MainContent = () => {
       )}
 
       <Routes>
-        <Route path="/products" element={<ProductsPage />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/shopping" element={<ShoppingPage />} />
+        <Route path="/products" element={<div className="content"><ProductsPage /></div>} />
+        <Route path="/login" element={<div className="content"> <Login /></div>} />
+        <Route path="/shopping" element={<div className="content"><ShoppingPage /></div>} />
         <Route path="/blog" element={<div className="content"><BlogPage /></div>} />
         <Route path='/posts/:id' element={<div className="content"><PostDetail /></div>} />
         <Route path='/authors' element={<div className="content"><Authors /></div>} />
@@ -79,19 +79,20 @@ const MainContent = () => {
        
 
         {/* Ruta para la página privada */}
-        <Route path="/private" element={<PrivateRoute allowedRoles={['user', 'admin']} element={<PrivatePage />} />}>
-          <Route path="pclasses" element={<PrivateRoute allowedRoles={['admin']} element={<AdminView />} />} />
-          <Route path="users" element={<PrivateRoute allowedRoles={['admin']} element={<UsersPage />} />} />
-          <Route path='products' element={<PrivateRoute allowedRoles={['admin']} element={<ProductsPrivatePage />} />} />
-          <Route path="profile/:id" element={<PrivateRoute allowedRoles={['admin', 'user']} element={<UsersDetail />} />} />
-          <Route path="uclasses" element={<PrivateRoute allowedRoles={['user']} element={<CustomerView />} />} />
-          <Route path='shopping' element={<PrivateRoute allowedRoles={['user']} element={<ShoppingPage />} />} />
-          <Route path="posts/:id/edit" element={<PrivateRoute allowedRoles={['admin']} element={<EditPost />} />} />
-          <Route path='posts/:id/delete' element={<PrivateRoute allowedRoles={['admin']} element={<DeletePost />} />} />
-          <Route path='posts/create' element={<PrivateRoute allowedRoles={['admin']} element={<CreatePost />} />} />
+        <Route path="/private" element={<div className='content'><PrivateRoute allowedRoles={['user', 'admin']} element={<PrivatePage />} /></div>}>
+          <Route path="pclasses" element={<div className='content'><PrivateRoute allowedRoles={['admin']} element={<AdminView />} /></div> } />
+          <Route path="users" element={<div className='content'><PrivateRoute allowedRoles={['admin']} element={<UsersPage />} /></div>} />
+          <Route path='products' element={<div className='content'><PrivateRoute allowedRoles={['admin']} element={<ProductsPrivatePage />} /></div>} />
+          <Route path="profile/:id" element={<div className='content'><PrivateRoute allowedRoles={['admin', 'user']} element={<UsersDetail />} /></div>} />
+          <Route path="uclasses" element={<div className='content'><PrivateRoute allowedRoles={['user']} element={<CustomerView />} /></div>} />
+          <Route path='shopping' element={<div className='content'><PrivateRoute allowedRoles={['user']} element={<ShoppingPage />} /></div>} />
+          <Route path='blog' element={<div className='content'><PrivateRoute allowedRoles={['admin']} element={<BlogPage />} /></div>} />
+          <Route path="posts/:id/edit" element={<div className='content'><PrivateRoute allowedRoles={['admin']} element={<EditPost />} /></div>} />
+          <Route path='posts/:id/delete' element={<div className='content'><PrivateRoute allowedRoles={['admin']} element={<DeletePost />} /></div>} />
+          <Route path='posts/create' element={<div className='content'><PrivateRoute allowedRoles={['admin']} element={<CreatePost />} /></div>} />
         </Route>
 
-        <Route path="*" element={<ErrorPage />} />
+        <Route path="*" element={<div className='content'><ErrorPage /></div>} />
       </Routes>
 
       <Footer />

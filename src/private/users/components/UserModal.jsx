@@ -6,18 +6,21 @@ const UserModal = ({ show, handleClose, user, handleSave }) => {
   const token = localStorage.getItem("token");
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
-  const [role, setRole] = useState('');
+  const [role, setRole] = useState(''); // Inicialmente vacío
+  const [password, setPassword] = useState(''); // Estado para la contraseña
 
   useEffect(() => {
     if (user) {
       setUsername(user.username || '');
       setEmail(user.email || '');
-      setRole(user.role || ''); // Agrega un valor por defecto si es necesario
+      setRole(user.role || ''); // Mantiene el rol del usuario a editar
+      setPassword(''); // Reiniciar la contraseña en cada edición
     } else {
       // Limpia los campos si no hay usuario
       setUsername('');
       setEmail('');
-      setRole('');
+      setRole(''); // Reinicia el rol al crear un nuevo usuario
+      setPassword(''); // Reiniciar la contraseña al crear un nuevo usuario
     }
   }, [user]);
 
@@ -26,9 +29,14 @@ const UserModal = ({ show, handleClose, user, handleSave }) => {
 
     try {
       let response;
+      const updatedUser = { username, email, role }; // Incluye el rol
+
       if (user && user._id) {
         // Edición del usuario
-        const updatedUser = { ...user, username, email, role };
+        // Solo enviar la contraseña si fue cambiada
+        if (password) {
+          updatedUser.password = password;
+        }
         response = await fetch(`${Global.url}/users/${user._id}`, {
           method: 'PUT',
           headers: {
@@ -37,7 +45,17 @@ const UserModal = ({ show, handleClose, user, handleSave }) => {
           },
           body: JSON.stringify(updatedUser),
         });
-      } 
+      } else {
+        // Crear nuevo usuario
+        response = await fetch(`${Global.url}/users`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            "Authorization": `Bearer ${token}`
+          },
+          body: JSON.stringify({ ...updatedUser, password }), // Incluye la contraseña al crear
+        });
+      }
 
       if (!response.ok) {
         const errorResponse = await response.json();
@@ -88,11 +106,24 @@ const UserModal = ({ show, handleClose, user, handleSave }) => {
               onChange={(e) => setRole(e.target.value)}
               required
             >
+              <option value="">Seleccionar rol</option> {/* Opción inicial */}
               <option value="admin">Administrador</option>
               <option value="user">Usuario</option>
               {/* Agrega más roles según sea necesario */}
             </Form.Control>
           </Form.Group>
+
+          {!user && (
+            <Form.Group controlId="formPassword">
+              <Form.Label>Contraseña</Form.Label>
+              <Form.Control 
+                type="password" 
+                value={password} 
+                onChange={(e) => setPassword(e.target.value)} 
+                required
+              />
+            </Form.Group>
+          )}
           
           <Button variant="info" type="submit" className='mt-3'>
             {user && user._id ? 'Guardar cambios' : 'Crear usuario'}
