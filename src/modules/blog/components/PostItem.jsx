@@ -2,6 +2,8 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import PostAuthor from '../components/PostAuthor'
 import "../css/stylesblog.css"
+import "../../../helpers/Global"
+import { Global } from '../../../helpers/Global'
 
 const PostItem = ({postID, category, title, description, authorID, thumbnail , updatedAt}) => {
     const shortDescription = description.length > 145 ? description.substr (0, 145) + '...' : description;
@@ -9,7 +11,7 @@ const PostItem = ({postID, category, title, description, authorID, thumbnail , u
   return (
     <article className="post">
         <div className='post__thumbnail'>
-            <img className='post__image' src={`http://localhost:3900/uploads/${thumbnail}`} alt= {title}/>
+            <img className='post__image' src={`${Global.BASE_URL}/uploads/${thumbnail}`} alt= {title}/>
         </div>
         <div className="post__content">
            <Link to={`/posts/${postID}`}> 

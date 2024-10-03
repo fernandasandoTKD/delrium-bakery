@@ -3,9 +3,10 @@ import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css'
 import { Global } from '../../../helpers/Global'
 import axios from 'axios'; // Importar Axios
+import { useNavigate } from 'react-router-dom';
 
 export const CreatePost = () => {
-  
+const navigate = useNavigate();
 
 const modules ={
     toolbar: [
@@ -79,6 +80,7 @@ const handleSubmit = async (e) => {
       'Authorization': `Bearer ${token}`,
     },
    })
+   navigate('/blog');
    console.log('Respuesta del servidor:', response.data);
 
   }catch(e) {
