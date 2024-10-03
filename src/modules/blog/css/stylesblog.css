@@ -70,8 +70,8 @@ h2 {
 }
 
 h3 {
-  font-size: 1.3rem;
-  line-height: 1.25;
+  font-size: 1.35rem;
+  line-height: 1.60;
 }
 
 h4 {
@@ -80,6 +80,7 @@ h4 {
 
 h5 {
   line-height: 1.4;
+  font-size: 0.90rem;
 }
 
 
@@ -108,7 +109,7 @@ section {
 .btn.category {
   background: var(--color-gray-900);
   color: var(--color-white);
-  font-size: 0.75rem;
+  /*font-size: 0.75rem;*/
   font-weight: 400;
 }
 
@@ -413,8 +414,9 @@ textarea {
 }
 
 .image_avatar {
-  width: 7rem;
+  width: 4rem;
   border-radius: 30%;
+
 }
 /*Profile*/
 
@@ -530,7 +532,6 @@ textarea {
   border-radius: var(--radius-1);
 }
 
-
 /*==Media Queries (small devices===*/
 
 @media screen and (max-width: 800px) {
@@ -543,7 +544,7 @@ textarea {
   }
 
   h3 {
-    font-size: 1.35rem;
+    font-size: 1.3rem;
     
   }
 
@@ -665,6 +666,3 @@ textarea {
   z-index: -1;
   
 }
-
-
-

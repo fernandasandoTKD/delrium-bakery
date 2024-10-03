@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import {Link} from "react-router-dom"
 import Logo from '../../../assets/logo.png'
-import  {FaBars} from "react-icons/fa"
+
+import { IoCreateOutline } from "react-icons/io5"
 import {AiOutlineClose} from "react-icons/ai"
 import { NavLink } from 'react-router-dom';
 import useAuth from '../../../hooks/useAuth';
@@ -36,7 +37,7 @@ const Header = () => {
         </ul>}
 
         <button className='nav__toggle-btn' onClick={()=> setIsNavShowing(!isNavshowing)}>
-          {isNavshowing ? <AiOutlineClose /> : <FaBars />}
+          {isNavshowing ? <AiOutlineClose /> : <IoCreateOutline />}
         </button>
       </div>
     </nav>

@@ -79,19 +79,11 @@ export const ProductsPage = () => {
       <div className="container px-4 px-lg-5">
           <div className="row h-100 align-items-center">
             <div className="col-lg-6 text-center">
-              <h1 className="text-uppercase text-light">DERILIUM</h1>
-              <h2 className="text-white-50 mt-2 mb-5">Tradición artesanal en productos de panadería y respostería.</h2>
+              <h1 className="text-uppercase text-light">DELIRIUM BAKERY</h1>
+              <h2 className="text-white-50 mt-2 mb-5">Tradición artesanal en productos de panadería y pastelería.</h2>
               <a className="btn btn-primary" onClick={handleRedirectBuyHere} >Compra acá</a>
             </div>
-            <div className="col-lg-4 d-flex justify-content-end">
-              <img
-                src={logo}
-                width="200"
-                height="auto"
-                alt="Logo"
-                className="img-fluid"
-              />
-            </div>
+            
           </div>
         </div>
       </header>
@@ -121,7 +113,7 @@ export const ProductsPage = () => {
         <Container className="pt-5">
           <Row className="justify-content-center">
             {productos
-              .filter(producto => producto.category?.name === 'reposteria') // Filtra los productos por categoría
+              .filter(producto => producto?.category?.name === 'reposteria') // Filtra los productos por categoría
               .map((producto, index) => (
                 <Col key={index} xs={12} sm={6} md={4} lg={3} className="mb-4 d-flex justify-content-center">
                   <div className={styles.card}>
@@ -144,7 +136,7 @@ export const ProductsPage = () => {
         <Container className="pt-5">
           <Row className="justify-content-center">
             {productos
-              .filter(producto => producto.category?.name === 'panes artesanales') // Filtra los productos por categoría
+              .filter(producto => producto?.category?.name === 'panes artesanales') // Filtra los productos por categoría
               .map((producto, index) => (
                 <Col key={index} xs={12} sm={6} md={4} lg={3} className="mb-4 d-flex justify-content-center">
                   <div className={styles.card}>
@@ -167,7 +159,7 @@ export const ProductsPage = () => {
         <Container className={styles.container}>
           <Row className="justify-content-center">
             {productos
-              .filter(producto => producto.category?.name === 'galletas') // Filtra los productos por categoría
+              .filter(producto => producto?.category?.name === 'galletas') // Filtra los productos por categoría
               .map((producto, index) => (
                 <Col key={index} xs={12} sm={6} md={4} lg={3} className="mb-4 d-flex justify-content-center">
                   <div className={styles.card}>

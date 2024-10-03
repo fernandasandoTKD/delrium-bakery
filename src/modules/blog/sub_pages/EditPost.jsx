@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState , useEffect } from 'react'
 import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css'
 import { Global } from '../../../helpers/Global'
@@ -6,9 +6,11 @@ import axios from 'axios'; // Importar Axios
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
+
 export const EditPost = () => {
 const { id } = useParams(); 
 const navigate = useNavigate();
+const [postDetail, setPostDetail] = useState();
 const modules ={
     toolbar: [
       [{'header': [1, 2, 3, 4, 5, 6, false] }],
@@ -33,7 +35,25 @@ const [formData, setFormData] = useState({
   thumbnail: null,
   description:''
 });
+useEffect(() => {
+  const fetchPostDetail = async () => {
+    try {
+      const response = await axios.get(`${Global.url}post/${id}`);
+      console.log("prueba editar post")
+      setFormData({
+        title: response.data.title,
+        category: response.data.category,
+        thumbnail: response.data.thumbnail,
+        description: response.data.description
+      });
+    } catch (error) {
+      console.error('Error al obtener Posts:', error);
+    }
+  };
 
+  fetchPostDetail(); // Llamar a la función para obtener las clases al montar el componente
+}, [id]);
+  
 // Manejar los cambios en los campos
 const handleChange = (e) => {
   const { name, value } = e.target;
@@ -121,7 +141,7 @@ const handleSubmit = async (e) => {
       
       
       <div>
-        
+      <img style ={{width:"100px"}} className='post__image' src={`${Global.BASE_URL}/uploads/${formData?.thumbnail}`} alt= {formData?.title}/>
         <input
           type="file"
           id="thumbnail"

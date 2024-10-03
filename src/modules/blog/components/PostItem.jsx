@@ -16,7 +16,7 @@ const PostItem = ({postID, category, title, description, authorID, thumbnail , u
   return (
     <article className="post">
         <div className='post__thumbnail'>
-            <img className='post__image' src={`http://localhost:3900/uploads/${thumbnail}`} alt= {title}/>
+            <img className='post__image' src={`${Global.BASE_URL}/uploads/${thumbnail}`} alt= {title}/>
         </div>
         <div className="post__content">
            <Link to={`/posts/${postID}`}> 
