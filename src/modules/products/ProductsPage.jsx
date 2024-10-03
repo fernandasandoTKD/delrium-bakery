@@ -53,7 +53,7 @@ export const ProductsPage = () => {
           <div className="row h-100 align-items-center">
             <div className="col-lg-6 text-center">
               <h1 className="text-uppercase text-light">DELIRIUM BAKERY</h1>
-              <h2 className="text-white-50 mt-2 mb-5">Tradición artesanal en productos de panadería y respostería.</h2>
+              <h2 className="text-white-50 mt-2 mb-5">Tradición artesanal en productos de panadería y pastelería.</h2>
               <a className="btn btn-primary" href="#about">Compra acá</a>
             </div>
             

@@ -7,6 +7,8 @@ import { Global } from '../../../helpers/Global';
 import axios from 'axios'; // Importar Axios
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { Button } from 'react-bootstrap';
+import Swal from 'sweetalert2';
 
 export const PostDetail = () => {
   const { auth, logout } = useAuth();
@@ -27,20 +29,32 @@ export const PostDetail = () => {
     fetchPostDetail(); // Llamar a la función para obtener las clases al montar el componente
   }, []);
     
-    const handleDelete = async () => {
-      try {
-        const token = localStorage.getItem("token");
-        const response = await axios.delete(`${Global.url}post/${id}`, {
-          headers: {
-          'Authorization': `Bearer ${token}`,
-        },});
-        navigate('/blog');
-        
-    } catch (error) {
-      console.error('Error al obtener Posts:', error);
-    }
-  };
+    
+  const handleDelete = async () => {
 
+    const confirm = await Swal.fire({
+      title: '¿Estás seguro de eliminar este Post?',
+      text: "Recuerda que no podrás recuperarlo",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar',
+    });
+  
+    if (!confirm.isConfirmed) return;
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.delete(`${Global.url}post/${id}`, {
+        headers: {
+        'Authorization': `Bearer ${token}`,
+      },});
+      navigate('/blog');
+      
+  } catch (error) {
+    console.error('Error al obtener Posts:', error);
+  }
+  }
+ 
   return (
     <section className= "post-detail">
       <div className="container post-detail__container">
@@ -49,7 +63,9 @@ export const PostDetail = () => {
             {(auth && auth.role == "admin") && 
               <div className="post-detail__buttons">
               <NavLink to={`/private/posts/${id}/edit`} className='btn sm primary'> Edit</NavLink>
-              <button className='btn sm danger' onClick={handleDelete}> Delete</button>
+              <Button className='btn sm danger' onClick={() => handleDelete()}>
+                Delete
+              </Button>
               </div> 
              
             }
