@@ -28,7 +28,7 @@ const formats =[
 const POST_CATEGORIES = ["Nuestra Historia", "Panes del mundo", "Tortas Artesanales", "Arte en galletas"]
 const [formData, setFormData] = useState({
   title: '',
-  category: '',
+  category: 'Nuestra Historia',
   thumbnail: null,
   description:''
 });
