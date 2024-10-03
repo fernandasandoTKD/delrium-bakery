@@ -6,10 +6,13 @@ import torta from '../../assets/Products/torta.jpg'
 import tortaGalletas from '../../assets/Products/tortaGalletas.jpg'
 import panChocolate from '../../assets/Products/panChocolate.jpg'
 import artesanal from '../../assets/Products/artesanal.jpg'
-import cookies from '../../assets/Products/cookies.png'
+import cookies from '../../assets/Products/cookies.jpg'
 import { useState, useEffect } from 'react';
 import { Global } from '../../helpers/Global';
 import { useNavigate } from 'react-router-dom';
+import pan from '../../assets/Products/pan.jpg'
+import tortaRender from '../../assets/Products/tortaRender.jpg'
+import Swal from 'sweetalert2';
 
 
 
@@ -53,6 +56,19 @@ export const ProductsPage = () => {
       seccion.scrollIntoView({ behavior: 'smooth' });
     }
     setCategoriaSeleccionada(id); // Establece la categoría seleccionada
+  };
+
+  const handlePersonalizarClick = () => {
+    Swal.fire({
+      title: 'Lo sentimos',
+      text: 'Tenemos muchos pedidos en este momento. Gestiona el tuyo por WhatsApp.',
+      icon: 'info',
+      showCancelButton: true,
+      confirmButtonText: '<a href="https://api.whatsapp.com/send?phone=%2B573214059115&app=facebook&entry_point=page_cta&fbclid=IwY2xjawFq67JleHRuA2FlbQIxMAABHdlbR4R1Na2ekucdkEHknrZaD__u0YuBLL1Pr8Gx3JKpkjcUlO6dBJzDvw_aem_Y1phSEw5nSNymZMeziOZ_w" target="_blank" style="color:white; text-decoration:none;"><i class="fab fa-whatsapp"></i> Ir a WhatsApp</a>',
+      cancelButtonText: 'Cancelar',
+      cancelButtonColor: '#d33',
+      confirmButtonColor: '#25D366', // Color del botón de WhatsApp
+    });
   };
 
 
@@ -109,7 +125,7 @@ export const ProductsPage = () => {
               .map((producto, index) => (
                 <Col key={index} xs={12} sm={6} md={4} lg={3} className="mb-4 d-flex justify-content-center">
                   <div className={styles.card}>
-                  <Image src={torta} fluid rounded /> {/* Asegúrate de que tu API retorne la URL de la imagen */}
+                  <Image src={tortaRender} fluid rounded /> {/* Asegúrate de que tu API retorne la URL de la imagen */}
                     <div className={styles.card__content}>
                       <h2 className={styles.card__title}>{producto.name}</h2>
                       <p className={styles.card__description}>{producto.description}</p>
@@ -132,7 +148,7 @@ export const ProductsPage = () => {
               .map((producto, index) => (
                 <Col key={index} xs={12} sm={6} md={4} lg={3} className="mb-4 d-flex justify-content-center">
                   <div className={styles.card}>
-                  <Image src={panChocolate} fluid rounded />
+                  <Image src={pan} fluid rounded />
                     <div className={styles.card__content}>
                     <h2 className={styles.card__title}>{producto.name}</h2>
                     <p className={styles.card__description}>{producto.description}</p>
@@ -177,12 +193,28 @@ export const ProductsPage = () => {
                 <h4>Categorías</h4>
                 <label>
                   <input type="radio" name="categoria" />
-                  <span>Opción 1</span>
+                  <span>Hallowen</span>
                 </label>
                 <br />
                 <label>
                   <input type="radio" name="categoria" />
-                  <span>Opción 2</span>
+                  <span>Amor y amistad</span>
+                </label>
+                <br />
+                <label>
+                  <input type="radio" name="categoria" />
+                  <span>Empresariales</span>
+                </label>
+                <br />
+                <label>
+                  <input type="radio" name="categoria" />
+                  <span>Baby shower</span>
+                </label>
+
+                <br />
+                <label>
+                  <input type="radio" name="categoria" />
+                  <span>Cumpleaños</span>
                 </label>
               </div>
 
@@ -191,12 +223,27 @@ export const ProductsPage = () => {
                 <h4>Glaseados</h4>
                 <label>
                   <input type="radio" name="glaseado" />
-                  <span>Glaseado 1</span>
+                  <span>Real</span>
                 </label>
                 <br />
                 <label>
                   <input type="radio" name="glaseado" />
-                  <span>Glaseado 2</span>
+                  <span>Azucarado</span>
+                </label>
+                <br />
+                <label>
+                  <input type="radio" name="glaseado" />
+                  <span>Manquequilla</span>
+                </label>
+                <br />
+                <label>
+                  <input type="radio" name="glaseado" />
+                  <span>Chococlate</span>
+                </label>
+                <br />
+                <label>
+                  <input type="radio" name="glaseado" />
+                  <span>Espejo</span>
                 </label>
               </div>
 
@@ -205,18 +252,34 @@ export const ProductsPage = () => {
                 <h4>Tipo de Galleta</h4>
                 <label>
                   <input type="radio" name="tipoGalleta" />
-                  <span>Galleta 1</span>
+                  <span>Mantequilla</span>
                 </label>
                 <br />
                 <label>
                   <input type="radio" name="tipoGalleta" />
-                  <span>Galleta 2</span>
+                  <span>Macarons</span>
+                </label>
+                <br />
+                <label>
+                  <input type="radio" name="tipoGalleta" />
+                  <span>Avena y pasas</span>
+                </label>
+                <br />
+                <label>
+                  <input type="radio" name="tipoGalleta" />
+                  <span>Almendra</span>
+                </label>
+                <br />
+                <label>
+                  <input type="radio" name="tipoGalleta" />
+                  <span>Jengibre</span>
                 </label>
               </div>
+              
             </div>
             {/* Botón Personalizar */}
             <div className="d-flex justify-content-center mt-4">
-              <button type="submit" className="btn btn-success btn-lg">
+              <button type="button" className="btn btn-success btn-lg" onClick={handlePersonalizarClick}>
                 Personalizar
               </button>
             </div>
