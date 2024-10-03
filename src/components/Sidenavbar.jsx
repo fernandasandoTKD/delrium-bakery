@@ -85,10 +85,11 @@ export const Sidenavbar = () => {
                     Productos
                   </NavLink>
                 </li>
+                
                 <li className="nav-item">
                   <NavLink
                     className="nav-link"
-                    to="/blog"
+                    to="/private/blog"
                     activeClassName="active"
                     onClick={closeOffcanvas} // Close on click
                   >

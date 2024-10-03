@@ -11,20 +11,27 @@ const ProductsModal = ({ show, handleClose, product, handleSave }) => {
   const [categories, setCategories] = useState([]); // Estado para las categorías
 
   useEffect(() => {
-    // Cargar los datos del producto si existe
     if (product) {
       setName(product.name || '');
       setDescription(product.description || '');
       setPrice(product.price || '');
-      setCategory(product.category || '');
+  
+      // Verifica si el producto tiene categoría asignada
+      if (product.category && product.category._id) {
+        setCategory(product.category._id);
+      } else {
+        setCategory(''); // Establece en vacío si no hay categoría asignada
+      }
     } else {
       // Limpia los campos si no hay producto
       setName('');
       setDescription('');
       setPrice('');
-      setCategory('');
+      setCategory(''); // Limpia la categoría
     }
   }, [product]);
+  
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -61,7 +68,7 @@ const ProductsModal = ({ show, handleClose, product, handleSave }) => {
       }
 
       const data = await response.json();
-      handleSave(data.data || data); // Asegúrate de pasar la data correcta
+      handleSave(data.data); // Asegúrate de pasar la data correcta
       handleClose(); // Cierra el modal después de guardar
     } catch (error) {
       console.error("Error al guardar el producto:", error);
@@ -72,7 +79,7 @@ const ProductsModal = ({ show, handleClose, product, handleSave }) => {
   useEffect(() => {
     // Cargar las categorías al abrir el modal
     const fetchCategories = async () => {
-      const response = await fetch(`${Global.url}categories/menu`);
+      const response = await fetch(`${Global.url}categories/categories`);
       const data = await response.json();
       setCategories(data.data); // Cargar categorías en el estado
     };
@@ -121,16 +128,22 @@ const ProductsModal = ({ show, handleClose, product, handleSave }) => {
             <Form.Label>Categoría</Form.Label>
             <Form.Control
               as="select"
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
+              value={category} // El valor seleccionado es el del estado `category`
+              onChange={(e) => setCategory(e.target.value)} // Actualiza el estado al cambiar
               required
             >
-              <option value="">Selecciona una categoría</option>
+              {/* Mostrar "Selecciona una categoría" solo si no hay categoría asignada */}
+              {!category && <option value="">Selecciona una categoría</option>}
+
               {categories.map((cat) => (
-                <option key={cat._id} value={cat._id}>{cat.name}</option>
+                <option key={cat._id} value={cat._id}>
+                  {cat.name}
+                </option>
               ))}
             </Form.Control>
           </Form.Group>
+
+
 
           <Button variant="info" type="submit" className='mt-3'>
             {product && product._id ? 'Guardar cambios' : 'Crear producto'}

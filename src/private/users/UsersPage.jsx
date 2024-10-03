@@ -33,6 +33,12 @@ const UsersPage = () => {
   };
 
 
+  const handleCreateClick = () => {
+    setCurrentUser(null);
+    setShowModal(true);
+  };
+
+
   const handleClose = () => {
     setShowModal(false);
     setCurrentUser(null); // Limpia el usuario actual al cerrar
@@ -40,7 +46,7 @@ const UsersPage = () => {
 
   const handleSave = async (userData) => {
     const token = localStorage.getItem("token");
-  
+
     if (!token) {
       console.error('No hay token suministrado');
       Swal.fire({
@@ -50,7 +56,7 @@ const UsersPage = () => {
       });
       return; // Salir de la función si no hay token
     }
-  
+
     try {
       const response = await fetch(`${Global.url}users/${userData._id}`, {
         method: 'PUT', // O 'PATCH' dependiendo de tu API
@@ -60,24 +66,24 @@ const UsersPage = () => {
         },
         body: JSON.stringify(userData), // Datos que estás enviando
       });
-  
+
       if (!response.ok) {
         throw new Error('Error al actualizar el usuario');
       }
-  
+
       const updatedUser = await response.json();
-  
+
       // Actualiza la lista de usuarios en el estado
       setUsers((prevUsers) =>
         prevUsers.map((user) => (user._id === updatedUser._id ? updatedUser : user))
       );
-  
+
       Swal.fire({
         icon: 'success',
         title: 'Usuario actualizado',
         text: 'Los datos del usuario se han actualizado correctamente.',
       });
-  
+
       // Cerrar el modal
       handleClose();
     } catch (error) {
@@ -99,11 +105,11 @@ const UsersPage = () => {
       confirmButtonText: 'Sí, eliminar',
       cancelButtonText: 'Cancelar',
     });
-  
+
     if (!confirm.isConfirmed) return; // Salir si el usuario cancela
-  
+
     const token = localStorage.getItem("token");
-  
+
     if (!token) {
       console.error('No hay token suministrado');
       Swal.fire({
@@ -113,7 +119,7 @@ const UsersPage = () => {
       });
       return; // Salir de la función si no hay token
     }
-  
+
     try {
       const response = await fetch(`${Global.url}users/${userId}`, {
         method: 'DELETE',
@@ -121,14 +127,14 @@ const UsersPage = () => {
           'Authorization': `Bearer ${token}`, // Asegúrate de enviar el token si es necesario
         },
       });
-  
+
       if (!response.ok) {
         throw new Error('Error al eliminar el usuario');
       }
-  
+
       // Actualiza la lista de usuarios en el estado
       setUsers((prevUsers) => prevUsers.filter((user) => user._id !== userId));
-  
+
       Swal.fire({
         icon: 'success',
         title: 'Usuario eliminado',
@@ -143,12 +149,6 @@ const UsersPage = () => {
       });
     }
   };
-  
-  
-  
-  
-  
-
   const roleTranslations = {
     admin: 'Administrador',
     user: 'Usuario',
@@ -159,12 +159,15 @@ const UsersPage = () => {
     <div className="container">
       <div className="d-flex justify-content-between align-items-center mb-4">
         <h1 className="mb-0">Usuarios del sistema</h1>
+        <Button variant="info" className="me-2" onClick={() => handleCreateClick()}>
+          Crear usuario
+        </Button>
       </div>
       <Row>
         {users.map((user) => (
           <Col key={user?._id} sm={12} md={4} className="mb-4"> {/* 3 cartas por fila en pantallas medianas y grandes */}
             <Card className="d-flex flex-column align-items-center">
-              <Card.Img variant="top" src={defaultImage}  style={{ width: '60%'}} />
+              <Card.Img variant="top" src={defaultImage} style={{ width: '60%' }} />
               <Card.Body>
                 <Card.Title>{user.username}</Card.Title>
                 <Card.Text>
@@ -179,16 +182,16 @@ const UsersPage = () => {
                 </Button>
               </Card.Body>
             </Card>
-            
+
           </Col>
         ))}
       </Row>
-        
-      <UserModal 
-        show={showModal} 
-        handleClose={handleClose} 
-        user={currentUser} 
-        handleSave={handleSave} 
+
+      <UserModal
+        show={showModal}
+        handleClose={handleClose}
+        user={currentUser}
+        handleSave={handleSave}
       />
     </div>
   );

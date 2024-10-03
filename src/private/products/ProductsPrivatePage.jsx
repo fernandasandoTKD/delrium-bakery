@@ -21,11 +21,7 @@ export const ProductsPrivatePage = () => {
         try {
             const response = await fetch(`${Global.url}products/products`);
             const data = await response.json();
-            if (data.status === 'success') {
-                setProducts(data.data);
-            } else {
-                throw new Error('Error en la respuesta de la API');
-            }
+            setProducts(data.data); 
         } catch (error) {
             console.error('Error al obtener los productos:', error);
             Swal.fire({
@@ -49,16 +45,17 @@ export const ProductsPrivatePage = () => {
 
     const handleSave = async (productData) => {
         const token = localStorage.getItem("token");
-
+    
         if (!token) {
+            console.error('No hay token suministrado');
             Swal.fire({
-                icon: 'error',
-                title: 'Error en la operación',
-                text: 'No estás autenticado.',
+              icon: 'error',
+              title: 'Error en la operación',
+              text: 'No estás autenticado. Por favor inicia sesión nuevamente.',
             });
-            return;
+            return; // Salir de la función si no hay token
         }
-
+    
         try {
             let response;
             if (productData._id) {
@@ -73,7 +70,7 @@ export const ProductsPrivatePage = () => {
                 });
             } else {
                 // Si no existe _id, se trata de una creación
-                response = await fetch(`${Global.url}products`, {
+                response = await fetch(`${Global.url}products/newProduct`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -82,10 +79,11 @@ export const ProductsPrivatePage = () => {
                     body: JSON.stringify(productData),
                 });
             }
-
+    
             const result = await response.json();
 
-            if (result.status === "success" && result.data) {
+            if (result.status === "success") {
+                
                 const savedProduct = result.data;
                 if (productData._id) {
                     // Actualiza el producto en la lista
@@ -106,7 +104,7 @@ export const ProductsPrivatePage = () => {
                         text: 'El producto se ha creado correctamente.',
                     });
                 }
-                handleClose(); // Cierra el modal
+                handleClose(); // Cierra el modal después de la operación
             } else {
                 Swal.fire({
                     icon: 'error',
@@ -123,6 +121,7 @@ export const ProductsPrivatePage = () => {
             });
         }
     };
+    
 
 
 

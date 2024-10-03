@@ -77,7 +77,15 @@ export const NavbarPrivate = () => {
                     Perfil
                   </a>
                   <ul className="dropdown-menu">
-                    <li><a className="dropdown-item" href="#">Detalle</a></li>
+                  <li>
+                    <NavLink
+                    className="dropdown-item"
+                    to={`/private/profile/${auth.id}`}
+                    activeClassName="active"
+                    onClick={closeOffcanvas} // Close on click
+                  >
+                    Detalle
+                  </NavLink></li>
                     <li><a className="dropdown-item" href="#" onClick={handleLogout}>Cerrar sesión</a></li>
                   </ul>
                 </li>

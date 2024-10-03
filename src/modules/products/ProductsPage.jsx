@@ -6,9 +6,14 @@ import torta from '../../assets/Products/torta.jpg'
 import tortaGalletas from '../../assets/Products/tortaGalletas.jpg'
 import panChocolate from '../../assets/Products/panChocolate.jpg'
 import artesanal from '../../assets/Products/artesanal.jpg'
-import cookies from '../../assets/Products/cookies.png'
+import cookies from '../../assets/Products/cookies.jpg'
 import { useState, useEffect } from 'react';
 import { Global } from '../../helpers/Global';
+import { useNavigate } from 'react-router-dom';
+import pan from '../../assets/Products/pan.jpg'
+import tortaRender from '../../assets/Products/tortaRender.jpg'
+import Swal from 'sweetalert2';
+
 
 
 
@@ -16,6 +21,15 @@ export const ProductsPage = () => {
 
   const [productos, setProductos] = useState([]);
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState(null);
+  const navigate = useNavigate();
+
+  const handleRedirect = () => {
+    navigate('/classes');
+  };
+
+  const handleRedirectBuyHere = () => {
+    navigate('/shopping');
+  };
 
   useEffect(() => {
     // Realiza la petición GET a tu API para obtener los productos
@@ -44,6 +58,19 @@ export const ProductsPage = () => {
     setCategoriaSeleccionada(id); // Establece la categoría seleccionada
   };
 
+  const handlePersonalizarClick = () => {
+    Swal.fire({
+      title: 'Lo sentimos',
+      text: 'Tenemos muchos pedidos en este momento. Gestiona el tuyo por WhatsApp.',
+      icon: 'info',
+      showCancelButton: true,
+      confirmButtonText: '<a href="https://api.whatsapp.com/send?phone=%2B573214059115&app=facebook&entry_point=page_cta&fbclid=IwY2xjawFq67JleHRuA2FlbQIxMAABHdlbR4R1Na2ekucdkEHknrZaD__u0YuBLL1Pr8Gx3JKpkjcUlO6dBJzDvw_aem_Y1phSEw5nSNymZMeziOZ_w" target="_blank" style="color:white; text-decoration:none;"><i class="fab fa-whatsapp"></i> Ir a WhatsApp</a>',
+      cancelButtonText: 'Cancelar',
+      cancelButtonColor: '#d33',
+      confirmButtonColor: '#25D366', // Color del botón de WhatsApp
+    });
+  };
+
 
 
   return (
@@ -54,7 +81,7 @@ export const ProductsPage = () => {
             <div className="col-lg-6 text-center">
               <h1 className="text-uppercase text-light">DERILIUM</h1>
               <h2 className="text-white-50 mt-2 mb-5">Tradición artesanal en productos de panadería y respostería.</h2>
-              <a className="btn btn-primary" href="#about">Compra acá</a>
+              <a className="btn btn-primary" onClick={handleRedirectBuyHere} >Compra acá</a>
             </div>
             <div className="col-lg-4 d-flex justify-content-end">
               <img
@@ -82,7 +109,7 @@ export const ProductsPage = () => {
             <button className={`btn btn-success ${styles.overlayButton}`} onClick={() => handleClick('seccionGalletas')}>Galletas</button>
           </Col>
           <Col xs={12} sm={6} md={4} lg={3} className="mb-4 d-flex justify-content-center"><Image src={panChocolate} fluid className={styles.moveRay} rounded />
-            <button className={`btn btn-primary ${styles.overlayButton}`} >Talleres</button>
+            <button className={`btn btn-primary ${styles.overlayButton}`} onClick={handleRedirect} >Talleres</button>
           </Col>
         </Row>
       </div>
@@ -94,11 +121,11 @@ export const ProductsPage = () => {
         <Container className="pt-5">
           <Row className="justify-content-center">
             {productos
-              .filter(producto => producto.category.name === 'reposteria') // Filtra los productos por categoría
+              .filter(producto => producto.category?.name === 'reposteria') // Filtra los productos por categoría
               .map((producto, index) => (
                 <Col key={index} xs={12} sm={6} md={4} lg={3} className="mb-4 d-flex justify-content-center">
                   <div className={styles.card}>
-                  <Image src={torta} fluid rounded /> {/* Asegúrate de que tu API retorne la URL de la imagen */}
+                  <Image src={tortaRender} fluid rounded /> {/* Asegúrate de que tu API retorne la URL de la imagen */}
                     <div className={styles.card__content}>
                       <h2 className={styles.card__title}>{producto.name}</h2>
                       <p className={styles.card__description}>{producto.description}</p>
@@ -117,11 +144,11 @@ export const ProductsPage = () => {
         <Container className="pt-5">
           <Row className="justify-content-center">
             {productos
-              .filter(producto => producto.category.name === 'panes artesanales') // Filtra los productos por categoría
+              .filter(producto => producto.category?.name === 'panes artesanales') // Filtra los productos por categoría
               .map((producto, index) => (
                 <Col key={index} xs={12} sm={6} md={4} lg={3} className="mb-4 d-flex justify-content-center">
                   <div className={styles.card}>
-                  <Image src={panChocolate} fluid rounded />
+                  <Image src={pan} fluid rounded />
                     <div className={styles.card__content}>
                     <h2 className={styles.card__title}>{producto.name}</h2>
                     <p className={styles.card__description}>{producto.description}</p>
@@ -140,7 +167,7 @@ export const ProductsPage = () => {
         <Container className={styles.container}>
           <Row className="justify-content-center">
             {productos
-              .filter(producto => producto.category.name === 'galletas') // Filtra los productos por categoría
+              .filter(producto => producto.category?.name === 'galletas') // Filtra los productos por categoría
               .map((producto, index) => (
                 <Col key={index} xs={12} sm={6} md={4} lg={3} className="mb-4 d-flex justify-content-center">
                   <div className={styles.card}>
@@ -166,12 +193,28 @@ export const ProductsPage = () => {
                 <h4>Categorías</h4>
                 <label>
                   <input type="radio" name="categoria" />
-                  <span>Opción 1</span>
+                  <span>Hallowen</span>
                 </label>
                 <br />
                 <label>
                   <input type="radio" name="categoria" />
-                  <span>Opción 2</span>
+                  <span>Amor y amistad</span>
+                </label>
+                <br />
+                <label>
+                  <input type="radio" name="categoria" />
+                  <span>Empresariales</span>
+                </label>
+                <br />
+                <label>
+                  <input type="radio" name="categoria" />
+                  <span>Baby shower</span>
+                </label>
+
+                <br />
+                <label>
+                  <input type="radio" name="categoria" />
+                  <span>Cumpleaños</span>
                 </label>
               </div>
 
@@ -180,12 +223,27 @@ export const ProductsPage = () => {
                 <h4>Glaseados</h4>
                 <label>
                   <input type="radio" name="glaseado" />
-                  <span>Glaseado 1</span>
+                  <span>Real</span>
                 </label>
                 <br />
                 <label>
                   <input type="radio" name="glaseado" />
-                  <span>Glaseado 2</span>
+                  <span>Azucarado</span>
+                </label>
+                <br />
+                <label>
+                  <input type="radio" name="glaseado" />
+                  <span>Manquequilla</span>
+                </label>
+                <br />
+                <label>
+                  <input type="radio" name="glaseado" />
+                  <span>Chococlate</span>
+                </label>
+                <br />
+                <label>
+                  <input type="radio" name="glaseado" />
+                  <span>Espejo</span>
                 </label>
               </div>
 
@@ -194,18 +252,34 @@ export const ProductsPage = () => {
                 <h4>Tipo de Galleta</h4>
                 <label>
                   <input type="radio" name="tipoGalleta" />
-                  <span>Galleta 1</span>
+                  <span>Mantequilla</span>
                 </label>
                 <br />
                 <label>
                   <input type="radio" name="tipoGalleta" />
-                  <span>Galleta 2</span>
+                  <span>Macarons</span>
+                </label>
+                <br />
+                <label>
+                  <input type="radio" name="tipoGalleta" />
+                  <span>Avena y pasas</span>
+                </label>
+                <br />
+                <label>
+                  <input type="radio" name="tipoGalleta" />
+                  <span>Almendra</span>
+                </label>
+                <br />
+                <label>
+                  <input type="radio" name="tipoGalleta" />
+                  <span>Jengibre</span>
                 </label>
               </div>
+              
             </div>
             {/* Botón Personalizar */}
             <div className="d-flex justify-content-center mt-4">
-              <button type="submit" className="btn btn-success btn-lg">
+              <button type="button" className="btn btn-success btn-lg" onClick={handlePersonalizarClick}>
                 Personalizar
               </button>
             </div>
